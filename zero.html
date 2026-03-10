@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Backend Roadmap</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #0a0a0f;
+      font-family: 'Space Mono', monospace;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+
+    .header {
+      border-bottom: 1px solid #1e1e2e;
+      padding: 32px 40px 24px;
+      background: linear-gradient(180deg, #0f0f1a 0%, #0a0a0f 100%);
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header-label {
+      color: #555;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .header h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(26px, 5vw, 46px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .header h1 span {
+      color: #00C9A7;
+    }
+
+    .header-sub {
+      margin-top: 10px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .progress-row {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-bar-bg {
+      flex: 1;
+      height: 3px;
+      background: #1a1a2e;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00C9A7, #4ECDC4);
+      border-radius: 2px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .phase-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .phase-btn {
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+    }
+
+    .phase-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header {
+        padding: 24px 20px 20px;
+      }
+
+      .main {
+        padding: 24px 16px;
+      }
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #1a1a2e;
+      background: #0d0d1a;
+    }
+
+    .card-accent {
+      padding: 24px;
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 14px;
+    }
+
+    .card-accent .card-label {
+      margin-bottom: 6px;
+    }
+
+    .phase-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .phase-duration {
+      font-size: 12px;
+    }
+
+    .phase-emoji-bg {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 80px;
+      opacity: 0.07;
+      pointer-events: none;
+    }
+
+    .complete-btn {
+      margin-top: 16px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .topic-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      align-items: flex-start;
+    }
+
+    .topic-arrow {
+      font-size: 10px;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    .topic-text {
+      font-size: 12px;
+      color: #bbb;
+      line-height: 1.6;
+    }
+
+    .resource-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: #111120;
+      border-radius: 4px;
+      border: 1px solid #1e1e30;
+      text-decoration: none;
+      font-size: 12px;
+      transition: opacity 0.2s;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .resource-link:hover {
+      opacity: 0.7;
+    }
+
+    .project-card {
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    .project-text {
+      font-size: 13px;
+      color: #ddd;
+      line-height: 1.7;
+    }
+
+    .tip-card {
+      padding: 16px;
+      border: 1px solid #1e1e30;
+      border-radius: 8px;
+      background: #0a0a15;
+      font-size: 11px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .tip-card span {
+      color: #666;
+    }
+
+    .stack-section {
+      margin-top: 32px;
+      padding: 20px;
+      border: 1px solid #1a1a2e;
+      border-radius: 8px;
+      background: #0d0d1a;
+    }
+
+    .stack-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .stack-tag {
+      padding: 5px 12px;
+      border-radius: 3px;
+      background: #111120;
+      border: 1px solid #222;
+      font-size: 11px;
+      color: #888;
+      font-family: 'Space Mono', monospace;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="header-inner">
+      <p class="header-label">python backend · roadmap 2025</p>
+      <h1>Do zero ao<br><span>mercado de trabalho</span></h1>
+      <p class="header-sub">~4 a 6 meses · 1–2h por dia · 100% gratuito</p>
+      <div class="progress-row">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <span class="progress-label" id="progressLabel">0/6 fases</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="phase-tabs" id="phaseTabs"></div>
+    <div class="grid" id="phaseContent"></div>
+    <div class="stack-section">
+      <p class="card-label">stack final que você vai dominar</p>
+      <div class="stack-tags">
+        <span class="stack-tag">Python 3.12+</span><span class="stack-tag">FastAPI</span><span
+          class="stack-tag">SQLAlchemy</span>
+        <span class="stack-tag">PostgreSQL</span><span class="stack-tag">JWT Auth</span><span
+          class="stack-tag">Pydantic</span>
+        <span class="stack-tag">Docker</span><span class="stack-tag">Git/GitHub</span><span
+          class="stack-tag">pytest</span>
+        <span class="stack-tag">REST APIs</span><span class="stack-tag">Alembic</span><span
+          class="stack-tag">async/await</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const phases = [
+      {
+        id: 1, title: "Fundamentos Python", duration: "4–6 semanas", color: "#00C9A7", icon: "🐍",
+        topics: [
+          "Sintaxe básica, tipos de dados, estruturas de controle",
+          "Funções, escopos e módulos",
+          "OOP: classes, herança, polimorfismo",
+          "Tratamento de exceções",
+          "List/Dict comprehensions e generators",
+          "Type hints (essencial para FastAPI!)"
+        ],
+        resources: [
+          { name: "Python.org — Tutorial Oficial (PT-BR)", url: "https://docs.python.org/pt-br/3/tutorial/" },
+          { name: "CS50P — Harvard (gratuito)", url: "https://cs50.harvard.edu/python/2022/" },
+          { name: "Real Python — Guias Práticos", url: "https://realpython.com/" }
+        ],
+        project: "Crie um sistema de cadastro de clientes em Python puro (CRUD no terminal) com OOP."
+      },
+      {
+        id: 2, title: "Git & Terminal", duration: "1–2 semanas", color: "#FF6B6B", icon: "🔧",
+        topics: [
+          "Git: init, add, commit, push, pull",
+          "Branches, merge e rebase",
+          "GitHub: Pull Requests e Issues",
+          "Comandos essenciais de terminal Linux",
+          "Ambientes virtuais com venv e pip"
+        ],
+        resources: [
+          { name: "Pro Git Book (PT-BR gratuito)", url: "https://git-scm.com/book/pt-br/v2" },
+          { name: "Atlassian Git Tutorials", url: "https://www.atlassian.com/br/git/tutorials" }
+        ],
+        project: "Coloque seu projeto anterior no GitHub com um README bem escrito e estruturado."
+      },
+      {
+        id: 3, title: "Banco de Dados & SQL", duration: "3–4 semanas", color: "#4ECDC4", icon: "🗄️",
+        topics: [
+          "SQL: SELECT, INSERT, UPDATE, DELETE",
+          "JOINs, subqueries e índices",
+          "PostgreSQL na prática",
+          "SQLAlchemy ORM para Python",
+          "Migrations com Alembic",
+          "Modelagem de dados relacional"
+        ],
+        resources: [
+          { name: "SQLZoo — SQL interativo (gratuito)", url: "https://sqlzoo.net/" },
+          { name: "PostgreSQL Tutorial (gratuito)", url: "https://www.postgresqltutorial.com/" },
+          { name: "SQLAlchemy Docs Oficiais", url: "https://docs.sqlalchemy.org/" }
+        ],
+        project: "Crie um banco de dados para uma loja: produtos, clientes e pedidos com relacionamentos."
+      },
+      {
+        id: 4, title: "REST APIs com FastAPI", duration: "5–7 semanas", color: "#FFD93D", icon: "⚡",
+        topics: [
+          "HTTP: métodos, status codes e headers",
+          "FastAPI: rotas, path params e query params",
+          "Pydantic para validação de dados",
+          "CRUD completo integrado ao banco",
+          "Autenticação JWT + OAuth2",
+          "Documentação automática (Swagger/ReDoc)",
+          "async/await no FastAPI",
+          "Testes com pytest + httpx"
+        ],
+        resources: [
+          { name: "FastAPI Docs Oficiais (PT-BR)", url: "https://fastapi.tiangolo.com/pt/" },
+          { name: "TestDriven.io — FastAPI com TDD", url: "https://testdriven.io/blog/fastapi-crud/" },
+          { name: "Full Stack FastAPI Template (GitHub)", url: "https://github.com/fastapi/full-stack-fastapi-template" }
+        ],
+        project: "API de gerenciamento de tarefas com autenticação JWT, PostgreSQL e documentação Swagger."
+      },
+      {
+        id: 5, title: "Docker & Deploy", duration: "2–3 semanas", color: "#A855F7", icon: "🐳",
+        topics: [
+          "Docker: containers, imagens e Dockerfile",
+          "Docker Compose para múltiplos serviços",
+          "Variáveis de ambiente com .env",
+          "Deploy na Railway ou Render (gratuito)",
+          "Noções de CI/CD com GitHub Actions"
+        ],
+        resources: [
+          { name: "Docker Docs — Get Started", url: "https://docs.docker.com/get-started/" },
+          { name: "Railway.app (deploy gratuito)", url: "https://railway.app/" },
+          { name: "Render.com (deploy gratuito)", url: "https://render.com/" }
+        ],
+        project: "Containerize sua API FastAPI com Docker Compose e faça deploy público online."
+      },
+      {
+        id: 6, title: "Portfólio & Mercado", duration: "Contínuo", color: "#F97316", icon: "🚀",
+        topics: [
+          "LinkedIn otimizado para dev backend",
+          "GitHub com projetos bem documentados",
+          "README profissional em cada projeto",
+          "1 projeto completo de portfólio",
+          "Contribuir em projetos open source",
+          "Preparação para entrevistas técnicas"
+        ],
+        resources: [
+          { name: "Roadmap.sh — Backend Developer", url: "https://roadmap.sh/backend" },
+          { name: "LeetCode — Prática de algoritmos", url: "https://leetcode.com/" },
+          { name: "Guia Entrevistas Dev (GitHub)", url: "https://github.com/kdn251/interviews" }
+        ],
+        project: "API completa: sistema de blog ou e-commerce com auth, upload de imagens, deploy e README detalhado."
+      }
+    ];
+
+    let activePhase = 1;
+    let completed = [];
+
+    function updateProgress() {
+      const pct = (completed.length / phases.length) * 100;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressLabel').textContent = completed.length + '/' + phases.length + ' fases';
+    }
+
+    function renderTabs() {
+      const container = document.getElementById('phaseTabs');
+      container.innerHTML = '';
+      phases.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'phase-btn';
+        const isActive = activePhase === p.id;
+        const isDone = completed.includes(p.id);
+        btn.style.border = `1px solid ${isActive ? p.color : '#222'}`;
+        btn.style.color = isActive ? p.color : '#555';
+        btn.style.background = isActive ? p.color + '18' : 'transparent';
+        btn.innerHTML = (isDone ? '<span style="color:#00C9A7">✓</span> ' : '') + p.icon + ' ' + p.title;
+        btn.onclick = () => { activePhase = p.id; render(); };
+        container.appendChild(btn);
+      });
+    }
+
+    function renderContent() {
+      const p = phases.find(x => x.id === activePhase);
+      const isDone = completed.includes(p.id);
+      const container = document.getElementById('phaseContent');
+
+      container.innerHTML = `
+    <div class="col">
+      <div class="card-accent" style="border:1px solid ${p.color}35; background:${p.color}08;">
+        <div class="phase-emoji-bg">${p.icon}</div>
+        <p class="card-label">fase ${p.id} de ${phases.length}</p>
+        <h2 class="phase-title">${p.icon} ${p.title}</h2>
+        <p class="phase-duration" style="color:${p.color}">⏱ ${p.duration}</p>
+        <button class="complete-btn" id="completeBtn"
+          style="border:1px solid ${isDone ? '#00C9A7' : '#333'}; color:${isDone ? '#00C9A7' : '#555'}; background:${isDone ? '#00C9A720' : 'transparent'}">
+          ${isDone ? '✓ Fase concluída!' : 'Marcar como concluída'}
+        </button>
+      </div>
+
+      <div class="card">
+        <p class="card-label">o que estudar</p>
+        ${p.topics.map(t => `
+          <div class="topic-item">
+            <span class="topic-arrow" style="color:${p.color}">▶</span>
+            <span class="topic-text">${t}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <p class="card-label">onde estudar (grátis)</p>
+        ${p.resources.map(r => `
+          <a href="${r.url}" target="_blank" class="resource-link" style="color:${p.color}">
+            <span>→</span> ${r.name}
+          </a>`).join('')}
+      </div>
+
+      <div class="project-card" style="border:1px solid ${p.color}45; background:${p.color}07; border-radius:8px;">
+        <p class="card-label">🛠 projeto prático</p>
+        <p class="project-text">${p.project}</p>
+      </div>
+
+      <div class="tip-card">
+        💡 <span>Dica: 1h por dia de forma consistente vale mais do que maratonas. Foque em projetos reais — é o que o mercado quer ver no portfólio.</span>
+      </div>
+    </div>
+  `;
+
+      document.getElementById('completeBtn').onclick = () => {
+        if (completed.includes(p.id)) {
+          completed = completed.filter(x => x !== p.id);
+        } else {
+          completed.push(p.id);
+        }
+        updateProgress();
+        render();
+      };
+    }
+
+    function render() {
+      renderTabs();
+      renderContent();
+    }
+
+    render();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,3410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevPath — Python do Jr ao Sênior</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: "Space Grotesk", sans-serif;
+    }
+
+    .font-mono {
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #020617;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 2px;
+    }
+
+    .code-block {
+      background: #020617;
+    }
+
+    @keyframes pb {
+      from {
+        width: 0%
+      }
+
+      to {
+        width: 100%
+      }
+    }
+
+    #pb {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f59e0b, #f97316);
+      z-index: 9999;
+      width: 0%;
+      transition: width .1s;
+    }
+
+    .panel {
+      animation: none;
+    }
+
+    .nav-link {
+      transition: color .15s, background .15s, border-color .15s;
+    }
+
+    .group-arrow {
+      transition: transform .2s;
+    }
+
+    .group-open .group-arrow {
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-950 text-slate-400 antialiased">
+  <div id="pb"></div>
+
+
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-56 shrink-0 bg-slate-900 border-r border-slate-800 flex flex-col overflow-y-auto">
+      <!-- Logo -->
+      <div class="px-4 py-4 border-b border-slate-800 shrink-0">
+        <div class="flex items-center gap-2 mb-0.5">
+          <div class="w-7 h-7 bg-yellow-400 rounded-md flex items-center justify-center text-sm font-bold text-black">⚡
+          </div>
+          <span class="font-bold text-white text-base">DevPath</span>
+        </div>
+        <p class="font-mono text-xs text-slate-600 pl-9">Python Jr → Sr</p>
+      </div>
+
+      <!-- Nav -->
+      <nav class="flex-1 py-2 overflow-y-auto text-sm">
+
+        <!-- Início -->
+        <div class="px-2 py-1">
+          <button onclick="show('home')" id="nav-home"
+            class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left">
+            <span>🏠</span><span>Início</span>
+          </button>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Roadmaps -->
+        <div class="px-2">
+          <div onclick="toggleGroup('grp-roadmaps')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-roadmaps">▶</span> Roadmaps
+          </div>
+          <div id="grp-roadmaps" class="hidden space-y-0.5">
+            <button onclick="show('road-python')" id="nav-road-python"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🐍</span><span>Python
+                Jr→Sr</span></button>
+            <button onclick="show('road-django')" id="nav-road-django"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🌿</span><span>Django</span></button>
+            <button onclick="show('road-docker')" id="nav-road-docker"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🐳</span><span>Docker
+                &amp; DevOps</span></button>
+            <button onclick="show('road-fastapi')" id="nav-road-fastapi"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>⚡</span><span>FastAPI</span></button>
+            <button onclick="show('road-banco')" id="nav-road-banco"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🗄️</span><span>Banco
+                de Dados</span></button>
+            <button onclick="show('road-eng')" id="nav-road-eng"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🏗️</span><span>Eng.
+                Software</span></button>
+          </div>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Python -->
+        <div class="px-2">
+          <div onclick="toggleGroup('grp-python')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-python">▶</span> Python
+          </div>
+          <div id="grp-python" class="hidden space-y-0.5">
+            <button onclick="show('g-py-basics')" id="nav-g-py-basics"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>📦</span><span>Fundamentos</span></button>
+            <button onclick="show('g-py-oop')" id="nav-g-py-oop"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🏗️</span><span>OOP
+                &amp; Classes</span></button>
+            <button onclick="show('g-py-advanced')" id="nav-g-py-advanced"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>⚡</span><span>Avançado</span></button>
+            <button onclick="show('g-py-async')" id="nav-g-py-async"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🔄</span><span>Async/Await</span></button>
+            <button onclick="show('g-pydantic')" id="nav-g-pydantic"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>✅</span><span>Pydantic
+                v2</span></button>
+          </div>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Web -->
+        <div class="px-2">
+          <div onclick="toggleGroup('grp-web')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-web">▶</span> Web
+          </div>
+          <div id="grp-web" class="hidden space-y-0.5">
+            <button onclick="show('g-django')" id="nav-g-django"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🌿</span><span>Django</span></button>
+            <button onclick="show('g-drf')" id="nav-g-drf"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🌐</span><span>Django
+                REST</span></button>
+            <button onclick="show('g-fastapi')" id="nav-g-fastapi"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>⚡</span><span>FastAPI</span></button>
+            <button onclick="show('g-auth')" id="nav-g-auth"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🔐</span><span>Auth
+                &amp; JWT</span></button>
+          </div>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Infra -->
+        <div class="px-2">
+          <div onclick="toggleGroup('grp-infra')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-infra">▶</span> Infra
+          </div>
+          <div id="grp-infra" class="hidden space-y-0.5">
+            <button onclick="show('g-docker')" id="nav-g-docker"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🐳</span><span>Docker</span></button>
+            <button onclick="show('g-redis')" id="nav-g-redis"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🔴</span><span>Redis</span></button>
+            <button onclick="show('g-celery')" id="nav-g-celery"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>⚙️</span><span>Celery</span></button>
+            <button onclick="show('g-git')" id="nav-g-git"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🌿</span><span>Git</span></button>
+            <button onclick="show('g-linux')" id="nav-g-linux"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🐧</span><span>Linux</span></button>
+          </div>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Dados -->
+        <div class="px-2">
+          <div onclick="toggleGroup('grp-dados')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-dados">▶</span> Dados
+          </div>
+          <div id="grp-dados" class="hidden space-y-0.5">
+            <button onclick="show('g-sql')" id="nav-g-sql"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>📋</span><span>SQL</span></button>
+            <button onclick="show('g-sqlalchemy')" id="nav-g-sqlalchemy"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🔗</span><span>SQLAlchemy</span></button>
+            <button onclick="show('g-postgres')" id="nav-g-postgres"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🐘</span><span>PostgreSQL</span></button>
+          </div>
+        </div>
+
+        <div class="mx-4 my-1 border-t border-slate-800"></div>
+
+        <!-- Qualidade -->
+        <div class="px-2 pb-4">
+          <div onclick="toggleGroup('grp-quality')"
+            class="flex items-center gap-2 px-3 py-1.5 text-xs font-mono uppercase tracking-widest text-slate-600 hover:text-slate-400 cursor-pointer select-none">
+            <span class="group-arrow" id="arr-grp-quality">▶</span> Qualidade
+          </div>
+          <div id="grp-quality" class="hidden space-y-0.5">
+            <button onclick="show('g-tests')" id="nav-g-tests"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🧪</span><span>Testes
+                pytest</span></button>
+            <button onclick="show('g-solid')" id="nav-g-solid"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🏛️</span><span>SOLID</span></button>
+            <button onclick="show('g-patterns')" id="nav-g-patterns"
+              class="nav-link w-full flex items-center gap-2 px-3 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 text-left"><span>🎨</span><span>Design
+                Patterns</span></button>
+          </div>
+        </div>
+
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 overflow-y-auto bg-slate-950" id="main-scroll" onscroll="updatePB()">
+      <div id="panels">
+
+        <div id="panel-home" class="panel p-8 max-w-9xl">
+
+          <div class="mb-10 rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 p-10">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+              <span class="font-mono text-xs text-green-400 uppercase tracking-widest">Python · Django · Docker ·
+                FastAPI</span>
+            </div>
+            <h1 class="text-5xl font-bold text-white leading-tight mb-4">Sua trilha completa<br><span
+                class="text-yellow-400">de dev Python.</span></h1>
+            <p class="text-slate-400 text-base max-w-lg leading-relaxed mb-8">Roadmaps, guias técnicos e exemplos reais
+              para dominar o ecossistema Python moderno. Use o menu lateral para navegar entre seções.</p>
+            <div class="flex gap-3 flex-wrap">
+              <button onclick="show('road-python')"
+                class="bg-yellow-400 hover:bg-yellow-300 text-black font-semibold text-sm px-5 py-2.5 rounded-xl transition-colors">Ver
+                Roadmaps →</button>
+              <button onclick="show('g-py-basics')"
+                class="border border-slate-700 hover:border-slate-500 text-slate-300 text-sm px-5 py-2.5 rounded-xl transition-colors">Explorar
+                Guias</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-5 gap-3 mb-10">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl mb-1">🗺️</div>
+              <div class="text-2xl font-bold text-yellow-400">6</div>
+              <div class="text-xs text-slate-600 mt-1">Roadmaps</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl mb-1">📚</div>
+              <div class="text-2xl font-bold text-cyan-400">18</div>
+              <div class="text-xs text-slate-600 mt-1">Guias</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl mb-1">💻</div>
+              <div class="text-2xl font-bold text-green-400">200+</div>
+              <div class="text-xs text-slate-600 mt-1">Exemplos</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl mb-1">🛠️</div>
+              <div class="text-2xl font-bold text-orange-400">20+</div>
+              <div class="text-xs text-slate-600 mt-1">Tecnologias</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 text-center">
+              <div class="text-2xl mb-1">🎯</div>
+              <div class="text-xl font-bold text-purple-400">Jr→Sr</div>
+              <div class="text-xs text-slate-600 mt-1">Progressivo</div>
+            </div>
+          </div>
+
+          <h2 class="text-white font-bold text-lg mb-4">Stack coberta</h2>
+          <div class="flex flex-wrap gap-2">
+            <span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">Python
+              3.12</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">Django
+              5</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">FastAPI</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-cyan-400 border-cyan-600/30 bg-cyan-950/20">Docker</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-purple-400 border-purple-600/30 bg-purple-950/20">PostgreSQL</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-pink-400 border-pink-600/30 bg-pink-950/20">Redis</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">Celery</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">SQLAlchemy</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">Pydantic
+              v2</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-pink-400 border-pink-600/30 bg-pink-950/20">pytest</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-purple-400 border-purple-600/30 bg-purple-950/20">mypy</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">Alembic</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-cyan-400 border-cyan-600/30 bg-cyan-950/20">GitHub
+              Actions</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">Nginx</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">asyncio</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-purple-400 border-purple-600/30 bg-purple-950/20">SOLID</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">Git</span><span
+              class="font-mono text-xs px-3 py-1 rounded-full border text-slate-400 border-slate-600/30 bg-slate-800/20">Linux</span>
+          </div>
+
+        </div>
+        <div id="panel-road-python" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Python Jr → Sênior</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Siga em ordem. Cada nível constrói sobre o anterior — não
+              pule etapas.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📦</span>Ambiente &
+                  Fundamentos</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Python 3.12+, pip e venv</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Poetry — gerenciamento moderno</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Variáveis, tipos, operadores</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Strings, f-strings, slicing</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Listas, tuplas, dicts, sets</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Condicionais, loops, break/continue</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Funções, *args, **kwargs</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>try/except/finally</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Módulos e imports</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📋</span>Stdlib &
+                  Comprehensions</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>List, dict, set comprehensions</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>map, filter, zip, enumerate, sorted</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>os, sys, pathlib</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>json, csv, datetime, re</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>collections: Counter, defaultdict, deque</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>itertools: chain, groupby, islice</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>functools: wraps, lru_cache, partial</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏗️</span>OOP Completo</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Classes, __init__, self</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>@property, setter, deleter</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Herança, super(), MRO</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Dunder: __str__, __repr__, __eq__</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>@classmethod e @staticmethod</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>@dataclass — boilerplate zero</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>ABC e @abstractmethod</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>⚡</span>Python Avançado
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Generators com yield — memória O(1)</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Decorators com functools.wraps</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Context managers: __enter__/__exit__</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Type hints completos (PEP 484)</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Protocols — duck typing tipado</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>__slots__ — otimização de memória</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔄</span>Concorrência &
+                  Async</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>GIL — I/O-bound vs CPU-bound</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>threading para I/O concorrente</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>multiprocessing para CPU paralelo</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>asyncio: event loop, coroutines</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>async/await, gather, Task, Queue</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>aiohttp — HTTP assíncrono</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🧪</span>Testes
+                  Profissionais</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>pytest — configuração e assertions</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Fixtures e conftest.py</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>parametrize, mark, xfail, skip</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Mock, patch, MagicMock</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>coverage.py — relatório</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>TDD: Red → Green → Refactor</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📦</span>Pydantic & Tipagem
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>BaseModel com type hints</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>@field_validator e @model_validator</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>model_dump(), model_validate_json()</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Pydantic Settings</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>mypy --strict rigoroso</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏛️</span>Arquitetura &
+                  Sênior</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>SOLID principles em Python</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Design Patterns: Factory, Strategy,
+                    Repository</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Clean Architecture — camadas</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Logging estruturado com structlog</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Profiling: cProfile, py-spy</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>CI/CD: ruff + black + mypy + pytest</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-road-django" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-green-400 bg-green-950/40 border-green-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Roadmap Django</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Do setup ao deploy de uma API REST em produção.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🚀</span>Setup & Estrutura
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>pip install django + startproject</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>manage.py: runserver, startapp, shell</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>INSTALLED_APPS, DATABASES no settings</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>python-decouple + .env</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🗂️</span>MVT Pattern</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Model → View → Template</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>urls.py — roteamento</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>FBV vs CBV</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Django Admin automático</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Forms e ModelForm</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🗄️</span>ORM & Migrations
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>makemigrations / migrate</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>CRUD: create, get, filter, update,
+                    delete</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>select_related, prefetch_related</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Q, F, annotate, aggregate</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Managers e QuerySets customizados</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>transaction.atomic</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔐</span>Auth & Segurança
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Sistema de auth nativo</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>@login_required e mixins</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Permissões e grupos</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>CSRF e XSS — proteção nativa</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>JWT com simplejwt</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🌐</span>DRF</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>ModelSerializer com validações</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>APIView vs ModelViewSet</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>DefaultRouter — URLs automáticas</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Filtros, busca, ordenação</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>drf-spectacular — Swagger</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>⚡</span>Cache & Performance
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Redis como backend de cache</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>N+1 — select_related obrigatório</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>WhiteNoise para estáticos</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Índices via Meta.indexes</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>⚙️</span>Celery & Tasks
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Celery + Redis broker</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>@shared_task com retry</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Celery Beat — agendamento</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Flower — monitoramento</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🚢</span>Deploy em Produção
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Gunicorn WSGI server</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Nginx proxy reverso + SSL</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Docker + docker-compose</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>GitHub Actions CI/CD</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-road-docker" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-cyan-400 bg-cyan-950/40 border-cyan-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Roadmap Docker & DevOps</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Do container local ao deploy automatizado em produção.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📦</span>Fundamentos</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Imagem vs Container vs Registry</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>docker run, ps, stop, rm, logs</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Portas: -p HOST:CONTAINER</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Volumes: -v para persistência</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>.dockerignore</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏗️</span>Dockerfile</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>FROM, WORKDIR, COPY, RUN, CMD</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Cache de camadas — ordem importa</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>ENV, ARG, EXPOSE, HEALTHCHECK</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Multi-stage builds</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Non-root user — segurança</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📋</span>Docker Compose
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>services, volumes, networks</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>depends_on com healthcheck</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>env_file e environment</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>docker compose up -d --build</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🌐</span>Redes & Volumes
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Volume nomeado vs Bind mount</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Redes: bridge, host, none</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Containers comunicam pelo nome</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔄</span>GitHub Actions
+                  CI/CD</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>O que é CI e CD</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>.github/workflows/*.yml</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Rodar testes no push/PR</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Build e push para Docker Hub</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Deploy via SSH com secrets</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>☁️</span>Cloud & Produção
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Railway / Render — PaaS</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>VPS Ubuntu Docker + Nginx</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>SSL com Certbot</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>AWS: EC2, ECR — conceito</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-road-fastapi" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-orange-400 bg-orange-950/40 border-orange-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Roadmap FastAPI</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">APIs async modernas, Pydantic, SQLAlchemy e JWT.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🚀</span>Primeiros Passos
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>pip install fastapi uvicorn[standard]</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>@app.get/post/put/delete</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Path, query e body parameters</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Swagger em /docs automático</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>HTTPException para erros</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📦</span>Pydantic v2</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>BaseModel para request/response</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Field() com validadores</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>@field_validator e @model_validator</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>response_model — filtrar saída</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>💉</span>Depends</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Depends() — injeção de dependências</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Sessão do banco como dependência</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Auth via dependência encadeada</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>APIRouter — modularizar rotas</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🗄️</span>SQLAlchemy Async
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>create_async_engine + asyncpg</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>AsyncSession como Depends()</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>mapped_column — syntax 2.x</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Alembic para migrations</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔐</span>Auth JWT</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>OAuth2PasswordBearer</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>JWT com python-jose</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Hash com passlib (bcrypt)</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>get_current_user como Depends</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🚀</span>Avançado</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>WebSockets em tempo real</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Server-Sent Events (SSE)</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Cache com Redis + aioredis</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Background tasks</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-road-banco" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-purple-400 bg-purple-950/40 border-purple-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Roadmap Banco de Dados</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">PostgreSQL, Redis, migrations e modelagem para aplicações
+              reais.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📚</span>SQL Fundamentos
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>SELECT, FROM, WHERE, ORDER BY</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>INSERT, UPDATE, DELETE</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>CREATE TABLE com tipos</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>PRIMARY KEY, FOREIGN KEY, UNIQUE</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔗</span>JOINs</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>INNER JOIN — correspondências</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>LEFT JOIN — todos da esquerda</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>CTE (WITH) — subquery nomeada</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>EXISTS, IN, NOT IN</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>📊</span>Aggregations</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>COUNT, SUM, AVG, MIN, MAX</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>GROUP BY e HAVING</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>CASE WHEN THEN END</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>COALESCE e NULLIF</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🪟</span>Window Functions
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>OVER (PARTITION BY ORDER BY)</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>ROW_NUMBER, RANK, DENSE_RANK</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>LAG e LEAD</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>SUM cumulativo (running total)</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>⚡</span>Performance</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>EXPLAIN ANALYZE</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>B-tree, Hash, GIN, GiST</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Índice composto e parcial</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Connection pooling</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏛️</span>PostgreSQL
+                  Avançado</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>JSONB — dados semi-estruturados</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Full-text search nativo</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Funções e triggers</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>pg_stat_statements</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-road-eng" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">🗺️
+              Roadmap</span>
+            <h2 class="text-white font-bold text-2xl">Roadmap Engenharia de Software</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">CS fundamentals, Git, HTTP, SOLID e arquitetura.</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🔢</span>CS Fundamentos
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Big O: O(1), O(log n), O(n), O(n²)</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Array, Lista, Pilha, Fila</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Tabela Hash — colisões</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Árvore Binária e BST</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Recursão — casos base</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🌿</span>Git Profissional
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>add, commit, push, pull</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Branches: criar, merge, rebase</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Conventional Commits</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Pull Requests e code review</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Git Flow vs Trunk-based</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🌐</span>HTTP & REST</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-green-400 border-green-600/30 bg-green-950/20">🟢
+                  Júnior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>HTTP request/response cycle</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>GET, POST, PUT, PATCH, DELETE</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>Status: 200, 201, 400, 401, 403, 404</span>
+                </li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-green-400 shrink-0 mt-0.5">▸</span><span>REST — 6 constraints de Fielding</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏛️</span>SOLID</div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>S — Single Responsibility</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>O — Open/Closed</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>L — Liskov Substitution</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>I — Interface Segregation</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>D — Dependency Inversion</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🎨</span>Design Patterns
+                </div><span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-yellow-400 border-yellow-600/30 bg-yellow-950/20">🟡
+                  Pleno</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Factory, Builder, Singleton</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Adapter, Decorator, Facade</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Strategy, Observer, Command</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-yellow-400 shrink-0 mt-0.5">▸</span><span>Repository e Unit of Work</span></li>
+              </ul>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
+              <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center gap-2 text-white font-semibold text-sm"><span>🏗️</span>Arquitetura</div>
+                <span
+                  class="font-mono text-xs px-2 py-0.5 rounded-full border text-orange-400 border-orange-600/30 bg-orange-950/20">🔴
+                  Sênior</span>
+              </div>
+              <ul class="space-y-1.5 list-none">
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Monolito vs Microserviços</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Clean Architecture</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>12-Factor App</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Event-driven: filas e mensageria</span></li>
+                <li class="flex gap-2 text-slate-400 text-xs"><span
+                    class="text-orange-400 shrink-0 mt-0.5">▸</span><span>Observabilidade: logs, métricas, traces</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="panel-g-py-basics" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">📦
+              Guia Python</span>
+            <h2 class="text-white font-bold text-2xl">Python Fundamentos</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Tipos, variáveis, estruturas de dados e funções — a base de
+              tudo.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-yellow-950/40 border-yellow-600/30">
+            <p class="text-yellow-400 font-semibold text-sm mb-1">💡 Por que usar Type Hints?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Type hints não mudam o comportamento em runtime, mas
+              permitem que mypy, IDEs e Pydantic detectem bugs antes de rodar. Padrão obrigatório em times
+              profissionais.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Tipos e variáveis</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# Tipos básicos com anotação
+nome: str   = "Alice"
+idade: int  = 25
+altura: float = 1.70
+ativo: bool = True
+
+# Python 3.10+ — union com | (antes era Union[int, str])
+def processar(valor: int | str | None) -&gt; str:
+    if valor is None:
+        return "vazio"
+    return str(valor)
+
+# Coleções tipadas (Python 3.9+)
+nomes: list[str]           = ["Alice", "Bob"]
+config: dict[str, int]     = {"timeout": 30}
+ponto: tuple[float, float] = (3.14, 2.71)
+ids: set[int]              = {1, 2, 3}
+
+# f-strings avançadas
+preco = 39.90
+print(f"Total: R${preco:.2f}")  # R$39.90
+print(f"{preco=}")              # preco=39.9 — debug
+print(f"{nome!r}")              # 'Alice'   — repr
+
+# Walrus := — atribuir e testar ao mesmo tempo
+import re
+texto = "email: alice@gmail.com"
+if m := re.search(r"[\w.]+@[\w]+\.[\w]+", texto):
+    print(f"Encontrado: {m.group()}")  # alice@gmail.com
+
+# match/case — Python 3.10+
+def http_status(code: int) -&gt; str:
+    match code:
+        case 200: return "OK"
+        case 201: return "Created"
+        case 404: return "Not Found"
+        case _:   return f"Código {code}"
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Listas, Dicts e Sets</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# LIST — ordenada, mutável, duplicatas ok
+frutas = ["maçã", "banana", "laranja"]
+frutas.append("uva")       # adiciona no fim
+frutas.insert(0, "kiwi")   # insere na posição 0
+frutas.remove("banana")    # remove por valor
+ultimo = frutas.pop()      # remove e retorna o último
+
+# Comprehension — mais legível que loop
+quadrados = [x**2 for x in range(1, 11)]
+# [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+pares = [x for x in range(20) if x % 2 == 0]
+
+# DICT — chave/valor, busca O(1)
+usuario = {"nome": "Alice", "idade": 25}
+usuario["email"] = "alice@ex.com"   # adicionar
+idade = usuario.get("idade", 0)     # sem KeyError
+
+# Merge dicts (Python 3.9+)
+padrao = {"timeout": 30, "retry": 3}
+custom = {"timeout": 60}
+final  = padrao | custom  # {"timeout": 60, "retry": 3}
+
+# Dict comprehension
+quadrados_dict = {x: x**2 for x in range(1, 6)}
+# {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+# SET — sem duplicatas, operações de conjunto O(1)
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+print(a &amp; b)  # {3, 4}          interseção
+print(a | b)  # {1,2,3,4,5,6}   união
+print(a - b)  # {1, 2}          diferença
+
+# collections — tipos especializados
+from collections import Counter, defaultdict, deque
+
+c = Counter("mississippi")
+print(c.most_common(3))  # [("s",4), ("i",4), ("p",2)]
+
+grupos = defaultdict(list)
+for palavra in ["maçã", "banana", "manga"]:
+    grupos[palavra[0]].append(palavra)
+# {"m": ["maçã", "manga"], "b": ["banana"]}
+
+fila = deque([1, 2, 3])
+fila.appendleft(0)  # O(1) no início — list é O(n)!
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Funções</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# *args — posicionais variáveis
+def somar(*numeros: int) -&gt; int:
+    return sum(numeros)
+
+somar(1, 2, 3)       # 6
+somar(10, 20, 30)    # 60
+
+# **kwargs — nomeados variáveis
+def criar_usuario(nome: str, **extras) -&gt; dict:
+    return {"nome": nome, **extras}
+
+criar_usuario("Alice", email="a@ex.com", admin=True)
+# {"nome": "Alice", "email": "a@ex.com", "admin": True}
+
+# Ordenar lista de dicts com key
+usuarios = [
+    {"nome": "Carol", "idade": 28},
+    {"nome": "Alice", "idade": 25},
+]
+por_idade = sorted(usuarios, key=lambda u: u["idade"])
+
+# Unpacking avançado
+primeiro, *meio, ultimo = [1, 2, 3, 4, 5]
+# primeiro=1  meio=[2,3,4]  ultimo=5
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-py-oop" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">🏗️
+              Guia Python</span>
+            <h2 class="text-white font-bold text-2xl">OOP — Orientação a Objetos</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Classes do básico ao avançado com exemplos reais.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-yellow-950/40 border-yellow-600/30">
+            <p class="text-yellow-400 font-semibold text-sm mb-1">💡 Regra de ouro</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Cada classe deve ter uma única razão para mudar. Se a
+              classe faz autenticação E envia emails E salva no banco — ela está errada. Quebre em classes menores.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">@dataclass + ABC + @property</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from dataclasses import dataclass, field
+from abc import ABC, abstractmethod
+from typing import ClassVar
+
+# ABC define o contrato — não pode ser instanciada
+class Forma(ABC):
+    @abstractmethod
+    def area(self) -&gt; float: ...
+
+    @abstractmethod
+    def perimetro(self) -&gt; float: ...
+
+    def descricao(self) -&gt; str:
+        # método concreto — reutilizado por subclasses
+        return f"{type(self).__name__}: área={self.area():.2f}"
+
+
+# @dataclass gera __init__, __repr__, __eq__ automaticamente
+@dataclass
+class Retangulo(Forma):
+    largura: float
+    altura:  float
+    _total_criados: ClassVar[int] = 0
+
+    def __post_init__(self):
+        if self.largura &lt;= 0 or self.altura &lt;= 0:
+            raise ValueError("Dimensões devem ser positivas")
+        Retangulo._total_criados += 1
+
+    def area(self) -&gt; float:
+        return self.largura * self.altura
+
+    def perimetro(self) -&gt; float:
+        return 2 * (self.largura + self.altura)
+
+    @property
+    def eh_quadrado(self) -&gt; bool:
+        # @property — acessa como atributo: r.eh_quadrado (sem ())
+        return self.largura == self.altura
+
+    @classmethod
+    def quadrado(cls, lado: float) -&gt; "Retangulo":
+        # Factory method — forma conveniente de criar
+        return cls(lado, lado)
+
+    @staticmethod
+    def validar(d: float) -&gt; bool:
+        # Sem self/cls — utilitário puro
+        return d &gt; 0
+
+
+r = Retangulo(5.0, 3.0)
+print(r.area())        # 15.0
+print(r.eh_quadrado)   # False  (sem parênteses!)
+print(r.descricao())   # Retangulo: área=15.00
+
+q = Retangulo.quadrado(4.0)
+print(q.eh_quadrado)   # True
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Herança e @property com setter</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+class Conta:
+    def __init__(self, titular: str, saldo: float = 0):
+        self._titular = titular
+        self._saldo   = saldo    # _ = "protegido" por convenção
+
+    @property
+    def saldo(self) -&gt; float:
+        return self._saldo
+
+    @saldo.setter
+    def saldo(self, valor: float):
+        if valor &lt; 0:
+            raise ValueError("Saldo não pode ser negativo")
+        self._saldo = valor
+
+    def depositar(self, valor: float) -&gt; None:
+        if valor &lt;= 0:
+            raise ValueError("Valor deve ser positivo")
+        self._saldo += valor
+
+    def sacar(self, valor: float) -&gt; None:
+        if valor &gt; self._saldo:
+            raise ValueError("Saldo insuficiente")
+        self._saldo -= valor
+
+    def __str__(self) -&gt; str:
+        return f"Conta({self._titular}, R${self._saldo:.2f})"
+
+
+# Herança — ContaEspecial herda tudo de Conta
+class ContaEspecial(Conta):
+    def __init__(self, titular: str, limite: float = 500):
+        super().__init__(titular)   # chama __init__ do pai
+        self._limite = limite
+
+    def sacar(self, valor: float) -&gt; None:
+        # Override: permite cheque especial até o limite
+        if valor &gt; self._saldo + self._limite:
+            raise ValueError("Limite excedido")
+        self._saldo -= valor
+
+
+c = Conta("Alice")
+c.depositar(1000)
+c.sacar(200)
+print(c.saldo)   # 800.0
+print(c)         # Conta(Alice, R$800.00)
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-py-advanced" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">⚡
+              Guia Python</span>
+            <h2 class="text-white font-bold text-2xl">Python Avançado</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Decorators, generators e context managers com exemplos do
+              mundo real.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Decorators</h3>
+          <div class="mb-4 p-4 rounded-lg border bg-yellow-950/40 border-yellow-600/30">
+            <p class="text-yellow-400 font-semibold text-sm mb-1">💡 O que é um decorator?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Uma função que recebe outra função, adiciona comportamento
+              e retorna. Usado em Django (@login_required), FastAPI (@app.get), pytest (@pytest.fixture).</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+import functools, time, logging
+
+# Decorator simples
+def log_chamada(func):
+    @functools.wraps(func)   # preserva __name__ e __doc__
+    def wrapper(*args, **kwargs):
+        print(f"→ Chamando {func.__name__}")
+        resultado = func(*args, **kwargs)
+        print(f"← Terminou {func.__name__}")
+        return resultado
+    return wrapper
+
+@log_chamada
+def somar(a: int, b: int) -&gt; int:
+    return a + b
+
+somar(2, 3)
+# → Chamando somar
+# ← Terminou somar
+
+# Decorator com parâmetros (factory de decorator)
+def retry(max_tentativas: int = 3, delay: float = 1.0):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            for t in range(1, max_tentativas + 1):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    logging.warning(f"Tentativa {t}: {e}")
+                    if t == max_tentativas: raise
+                    time.sleep(delay)
+        return wrapper
+    return decorator
+
+@retry(max_tentativas=3, delay=0.5)
+def buscar_api(url: str) -&gt; dict:
+    import requests
+    r = requests.get(url, timeout=5)
+    r.raise_for_status()
+    return r.json()
+
+# lru_cache — memoização built-in
+from functools import lru_cache
+
+@lru_cache(maxsize=128)
+def fibonacci(n: int) -&gt; int:
+    if n &lt;= 1: return n
+    return fibonacci(n-1) + fibonacci(n-2)
+
+fibonacci(35)   # instantâneo — usa cache
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Generators — memória O(1)</h3>
+          <div class="mb-4 p-4 rounded-lg border bg-yellow-950/40 border-yellow-600/30">
+            <p class="text-yellow-400 font-semibold text-sm mb-1">💡 Por que usar generators?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Uma lista com 1 milhão de itens ocupa ~8MB. O generator
+              equivalente ocupa ~200 bytes — porque processa um item por vez, não carrega tudo na memória.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from itertools import islice, groupby
+
+# yield — pausa e entrega um valor por vez
+def ler_csv(caminho: str):
+    import csv
+    with open(caminho, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        for linha in reader:
+            yield linha   # 1 linha na memória por vez
+
+# Funciona com 10 milhões de linhas sem explodir RAM
+total = 0
+for row in ler_csv("vendas.csv"):
+    total += float(row["valor"])
+
+# Generator expression (mais leve que list comprehension)
+soma = sum(x**2 for x in range(1_000_000))
+
+# islice — pegar N itens de iterável (até infinito)
+def contar(n: int = 0):
+    while True:
+        yield n
+        n += 1
+
+primeiros_5 = list(islice(contar(10), 5))
+# [10, 11, 12, 13, 14]
+
+# groupby — agrupar por chave (precisa estar ordenado!)
+pedidos = [
+    {"status": "pago",     "id": 1},
+    {"status": "pago",     "id": 3},
+    {"status": "pendente", "id": 2},
+]
+pedidos.sort(key=lambda x: x["status"])
+for status, grupo in groupby(pedidos, key=lambda x: x["status"]):
+    ids = [p["id"] for p in grupo]
+    print(f"{status}: {ids}")
+# pago: [1, 3]
+# pendente: [2]
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Context Managers</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from contextlib import contextmanager
+import time
+
+@contextmanager
+def timer(label: str = "Execução"):
+    inicio = time.perf_counter()
+    try:
+        yield    # código dentro do "with" roda aqui
+    finally:
+        elapsed = time.perf_counter() - inicio
+        print(f"{label}: {elapsed*1000:.1f}ms")
+        # finally garante que imprime mesmo se der erro
+
+with timer("Busca no banco"):
+    resultado = buscar_produtos()
+# Busca no banco: 45.3ms
+
+# Context manager para transação
+@contextmanager
+def transacao(conn):
+    try:
+        yield conn
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+
+with transacao(db_conn) as conn:
+    conn.execute("UPDATE contas SET saldo = saldo - 100 WHERE id = 1")
+    conn.execute("UPDATE contas SET saldo = saldo + 100 WHERE id = 2")
+# commit se ok, rollback automático se erro
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-py-async" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-cyan-400 bg-cyan-950/40 border-cyan-600/30 mb-2">🔄
+              Guia Python</span>
+            <h2 class="text-white font-bold text-2xl">Async / Await</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Execute N tarefas simultâneas sem criar threads — ideal para
+              I/O intenso.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-cyan-950/40 border-cyan-600/30">
+            <p class="text-cyan-400 font-semibold text-sm mb-1">💡 Quando usar async?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">I/O-bound: chamadas HTTP, banco de dados, arquivos. Sem
+              async: 10 chamadas × 500ms = 5s. Com async: 10 chamadas simultâneas ≈ 500ms total.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-cyan-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+import asyncio
+import aiohttp
+
+# async def — define uma coroutine
+async def buscar_usuario(session: aiohttp.ClientSession, uid: int) -&gt; dict:
+    url = f"https://jsonplaceholder.typicode.com/users/{uid}"
+    async with session.get(url) as resp:
+        resp.raise_for_status()       # erro se 4xx/5xx
+        return await resp.json()      # await cede o controle
+
+
+# Buscar vários em PARALELO
+async def buscar_todos(ids: list[int]) -&gt; list[dict]:
+    async with aiohttp.ClientSession() as session:
+        tasks = [buscar_usuario(session, uid) for uid in ids]
+        # gather executa todas ao mesmo tempo
+        resultados = await asyncio.gather(*tasks, return_exceptions=True)
+        # return_exceptions=True: não cancela tudo se 1 falhar
+        return [r for r in resultados if not isinstance(r, Exception)]
+
+
+# Ponto de entrada
+usuarios = asyncio.run(buscar_todos([1, 2, 3, 4, 5]))
+
+
+# asyncio.Queue — produtor / consumidor desacoplados
+async def produtor(queue: asyncio.Queue, itens: list) -&gt; None:
+    for item in itens:
+        await queue.put(item)
+    await queue.put(None)   # sentinel = sinal de fim
+
+async def consumidor(queue: asyncio.Queue) -&gt; None:
+    while True:
+        item = await queue.get()
+        if item is None:
+            break
+        print(f"Processando: {item}")
+        await asyncio.sleep(0.1)   # simula I/O
+        queue.task_done()
+
+async def main() -&gt; None:
+    queue: asyncio.Queue = asyncio.Queue(maxsize=5)
+    await asyncio.gather(
+        produtor(queue, [1, 2, 3, 4, 5]),
+        consumidor(queue),
+    )
+
+asyncio.run(main())
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-pydantic" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-orange-400 bg-orange-950/40 border-orange-600/30 mb-2">✅
+              Guia Python</span>
+            <h2 class="text-white font-bold text-2xl">Pydantic v2</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Validação e serialização de dados — padrão do FastAPI,
+              reescrito em Rust na v2.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-orange-950/40 border-orange-600/30">
+            <p class="text-orange-400 font-semibold text-sm mb-1">⚡ v2 vs v1</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Pydantic v2 é 5–50x mais rápido. Mudanças: @validator →
+              @field_validator, dict() → model_dump(), parse_raw() → model_validate_json().</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-orange-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# pip install pydantic[email]
+from pydantic import BaseModel, EmailStr, Field, field_validator, model_validator
+from enum import Enum
+
+class StatusPedido(str, Enum):
+    PENDENTE  = "pendente"
+    PAGO      = "pago"
+    CANCELADO = "cancelado"
+
+class ItemPedido(BaseModel):
+    produto_id:     int   = Field(gt=0)
+    quantidade:     int   = Field(default=1, ge=1, le=100)
+    preco_unitario: float = Field(gt=0)
+
+    @property
+    def subtotal(self) -&gt; float:
+        return self.quantidade * self.preco_unitario
+
+class CriarPedido(BaseModel):
+    email: EmailStr
+    itens: list[ItemPedido] = Field(min_length=1)
+    cupom: str | None = None
+
+    @field_validator("cupom")
+    @classmethod
+    def cupom_maiusculo(cls, v: str | None) -&gt; str | None:
+        return v.upper() if v else None
+
+    @model_validator(mode="after")
+    def validar_total(self) -&gt; "CriarPedido":
+        total = sum(i.subtotal for i in self.itens)
+        if total &gt; 10_000 and self.cupom is None:
+            raise ValueError("Acima de R$10.000 exige cupom")
+        return self
+
+
+# Criando
+pedido = CriarPedido(
+    email="alice@ex.com",
+    itens=[{"produto_id": 1, "quantidade": 2, "preco_unitario": 49.90}],
+    cupom="promo10",
+)
+print(pedido.cupom)   # PROMO10 — validator aplicou upper()
+
+# Serializando
+pedido.model_dump()                    # dict Python
+pedido.model_dump(exclude={"cupom"})   # sem o cupom
+pedido.model_dump_json(indent=2)       # JSON formatado
+
+# Deserializando de JSON string
+p2 = CriarPedido.model_validate_json(json_string)
+
+# Erro de validação — lista detalhada
+try:
+    CriarPedido(email="invalido", itens=[])
+except Exception as e:
+    print(e.errors())   # [{type, loc, msg, input}]
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-django" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-green-400 bg-green-950/40 border-green-600/30 mb-2">🌿
+              Guia Web</span>
+            <h2 class="text-white font-bold text-2xl">Django Completo</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Setup, models, ORM, signals e cache com exemplos reais.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Setup do projeto</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+python -m venv venv &amp;&amp; source venv/bin/activate
+pip install django python-decouple psycopg2-binary
+pip install djangorestframework django-cors-headers
+pip install drf-spectacular django-filter django-redis
+
+django-admin startproject config .
+python manage.py startapp produtos  apps/produtos
+
+# .env
+SECRET_KEY=django-insecure-troque-isso
+DEBUG=True
+DB_NAME=devpath
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+REDIS_URL=redis://localhost:6379/0
+
+# config/settings.py
+from decouple import config, Csv
+
+SECRET_KEY    = config("SECRET_KEY")
+DEBUG         = config("DEBUG", cast=bool, default=False)
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="localhost")
+
+DATABASES = {
+    "default": {
+        "ENGINE":   "django.db.backends.postgresql",
+        "NAME":     config("DB_NAME"),
+        "USER":     config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST":     config("DB_HOST", default="localhost"),
+    }
+}
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Models com boas práticas</h3>
+          <div class="mb-4 p-4 rounded-lg border bg-green-950/40 border-green-600/30">
+            <p class="text-green-400 font-semibold text-sm mb-1">💡 Abstract Models</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Crie TimeStampedModel com criado_em e atualizado_em e
+              herde todos os models dela. Nunca repita esses campos.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# apps/core/models.py
+class TimeStampedModel(models.Model):
+    criado_em     = models.DateTimeField(auto_now_add=True, db_index=True)
+    atualizado_em = models.DateTimeField(auto_now=True)
+    class Meta:
+        abstract = True   # não cria tabela
+
+
+# apps/produtos/models.py
+class ProdutoQuerySet(models.QuerySet):
+    def ativos(self):
+        return self.filter(status="ativo")
+
+    def por_categoria(self, slug: str):
+        return self.filter(categoria__slug=slug)
+
+
+class Produto(TimeStampedModel):
+    class Status(models.TextChoices):
+        RASCUNHO = "rascunho", "Rascunho"
+        ATIVO    = "ativo",    "Ativo"
+
+    nome      = models.CharField(max_length=200)
+    slug      = models.SlugField(unique=True)
+    preco     = models.DecimalField(max_digits=10, decimal_places=2)
+    estoque   = models.PositiveIntegerField(default=0)
+    status    = models.CharField(max_length=10, choices=Status.choices, default=Status.RASCUNHO)
+    categoria = models.ForeignKey("Categoria", on_delete=models.PROTECT, related_name="produtos")
+
+    objects = ProdutoQuerySet.as_manager()
+
+    class Meta:
+        indexes = [models.Index(fields=["status", "criado_em"])]
+
+
+# Uso limpo com manager customizado
+Produto.objects.ativos().por_categoria("eletronicos")
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">ORM — Resolvendo N+1</h3>
+          <div class="mb-4 p-4 rounded-lg border bg-green-950/40 border-green-600/30">
+            <p class="text-green-400 font-semibold text-sm mb-1">🚨 N+1 Query Problem</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Cada acesso a FK dentro de um loop = 1 nova query. 100
+              produtos = 101 queries. select_related() resolve com 1 query usando JOIN.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# ERRADO — N+1
+for p in Produto.objects.all():       # 1 query
+    print(p.categoria.nome)           # +1 query por produto!
+
+# CERTO — select_related para FK/OneToOne
+qs = Produto.objects.select_related("categoria").all()  # 1 query com JOIN
+
+# CERTO — prefetch_related para ManyToMany
+pedidos = Pedido.objects.prefetch_related("itens", "itens__produto")
+
+# Q objects — filtros complexos OR / NOT
+from django.db.models import Q, F, Count, Avg
+
+Produto.objects.filter(
+    Q(nome__icontains="notebook") | Q(descricao__icontains="notebook"),
+    ~Q(estoque=0),        # ~ = NOT
+    status="ativo",
+)
+
+# F objects — operação no banco (sem race condition)
+Produto.objects.filter(pk=1).update(estoque=F("estoque") + 10)
+
+# annotate — campo calculado na query SQL
+categorias = Categoria.objects.annotate(
+    total=Count("produtos"),
+    media_preco=Avg("produtos__preco"),
+).filter(total__gte=5).order_by("-total")
+
+# Transação atômica
+from django.db import transaction
+
+@transaction.atomic
+def transferir(de_id: int, para_id: int, qtd: int):
+    origem  = Produto.objects.select_for_update().get(pk=de_id)
+    destino = Produto.objects.select_for_update().get(pk=para_id)
+    if origem.estoque &lt; qtd:
+        raise ValueError("Estoque insuficiente")
+    origem.estoque  -= qtd
+    destino.estoque += qtd
+    origem.save(update_fields=["estoque"])
+    destino.save(update_fields=["estoque"])
+    # se qualquer linha falhar, tudo é revertido
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-drf" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-green-400 bg-green-950/40 border-green-600/30 mb-2">🌐
+              Guia Web</span>
+            <h2 class="text-white font-bold text-2xl">Django REST Framework</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Serializers, ViewSets e rotas automáticas — API completa em
+              poucas linhas.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# serializers.py
+from rest_framework import serializers
+from .models import Produto
+
+class ProdutoListSerializer(serializers.ModelSerializer):
+    categoria_nome = serializers.CharField(source="categoria.nome", read_only=True)
+
+    class Meta:
+        model  = Produto
+        fields = ["id", "nome", "slug", "preco", "categoria_nome"]
+
+class ProdutoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model            = Produto
+        fields           = "__all__"
+        read_only_fields = ["id", "criado_em", "atualizado_em"]
+
+    def validate_preco(self, value):
+        if value &lt;= 0:
+            raise serializers.ValidationError("Preço deve ser positivo")
+        return value
+
+
+# views.py
+from rest_framework import viewsets, permissions, filters
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
+
+class ProdutoViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    filter_backends    = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields   = ["status", "categoria__slug"]
+    search_fields      = ["nome", "descricao"]
+    ordering_fields    = ["preco", "criado_em"]
+    lookup_field       = "slug"
+
+    def get_queryset(self):
+        return Produto.objects.select_related("categoria").ativos()
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ProdutoListSerializer
+        return ProdutoSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(criador=self.request.user)
+
+    @action(detail=True, methods=["post"])
+    def publicar(self, request, slug=None):
+        produto = self.get_object()
+        produto.status = Produto.Status.ATIVO
+        produto.save(update_fields=["status"])
+        return Response({"status": "publicado"})
+
+
+# urls.py
+from rest_framework.routers import DefaultRouter
+router = DefaultRouter()
+router.register("produtos", ProdutoViewSet)
+# URLs geradas automaticamente:
+# GET    /api/produtos/              list
+# POST   /api/produtos/              create
+# GET    /api/produtos/{slug}/       retrieve
+# PUT    /api/produtos/{slug}/       update
+# DELETE /api/produtos/{slug}/       destroy
+# POST   /api/produtos/{slug}/publicar/
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-fastapi" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-orange-400 bg-orange-950/40 border-orange-600/30 mb-2">⚡
+              Guia Web</span>
+            <h2 class="text-white font-bold text-2xl">FastAPI</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">APIs async com docs automáticas, Pydantic e Depends.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-orange-950/40 border-orange-600/30">
+            <p class="text-orange-400 font-semibold text-sm mb-1">⚡ Por que FastAPI?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Velocidade comparável a Node.js e Go. Docs em /docs
+              automático. Async nativo. Pydantic incluído. Type hints em tudo.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-orange-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from fastapi import FastAPI, HTTPException, Depends, status
+from pydantic import BaseModel, Field
+
+app = FastAPI(title="Loja API", version="1.0.0")
+
+class ProdutoCreate(BaseModel):
+    nome:    str   = Field(min_length=2, max_length=200)
+    preco:   float = Field(gt=0)
+    estoque: int   = Field(default=0, ge=0)
+
+class ProdutoResponse(ProdutoCreate):
+    id: int
+
+db: dict[int, dict] = {}
+counter = 0
+
+@app.get("/produtos", response_model=list[ProdutoResponse])
+async def listar(pagina: int = 1, tamanho: int = 10, busca: str | None = None):
+    todos = list(db.values())
+    if busca:
+        todos = [p for p in todos if busca.lower() in p["nome"].lower()]
+    inicio = (pagina - 1) * tamanho
+    return todos[inicio : inicio + tamanho]
+
+@app.get("/produtos/{id}", response_model=ProdutoResponse)
+async def buscar(id: int):
+    if id not in db:
+        raise HTTPException(404, f"Produto {id} não encontrado")
+    return db[id]
+
+@app.post("/produtos", response_model=ProdutoResponse, status_code=201)
+async def criar(data: ProdutoCreate):
+    global counter
+    counter += 1
+    produto = {"id": counter, **data.model_dump()}
+    db[counter] = produto
+    return produto
+
+@app.delete("/produtos/{id}", status_code=204)
+async def deletar(id: int):
+    db.pop(id, None)
+
+# uvicorn main:app --reload
+# Acesse: http://localhost:8000/docs
+
+
+# Depends — injeção de dependências
+from dataclasses import dataclass
+
+@dataclass
+class Paginacao:
+    pagina:  int = 1
+    tamanho: int = 20
+
+    @property
+    def offset(self) -&gt; int:
+        return (self.pagina - 1) * self.tamanho
+
+def get_paginacao(pagina: int = 1, tamanho: int = 20) -&gt; Paginacao:
+    if tamanho &gt; 100:
+        raise HTTPException(400, "Máximo 100 itens")
+    return Paginacao(pagina, tamanho)
+
+async def get_db():
+    async with AsyncSessionLocal() as session:
+        yield session   # cleanup automático após a rota
+
+@app.get("/itens")
+async def listar_itens(
+    pag: Paginacao = Depends(get_paginacao),
+    db = Depends(get_db),
+):
+    result = await db.execute(select(Item).offset(pag.offset).limit(pag.tamanho))
+    return result.scalars().all()
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-auth" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-pink-400 bg-pink-950/40 border-pink-600/30 mb-2">🔐
+              Guia Web</span>
+            <h2 class="text-white font-bold text-2xl">Auth & JWT</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">JWT com FastAPI e Django, hash de senha e OAuth2.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-pink-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# pip install python-jose[cryptography] passlib[bcrypt]
+from datetime import datetime, timedelta
+from jose import jwt, JWTError
+from passlib.context import CryptContext
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import Depends, HTTPException
+
+SECRET_KEY = "troque-em-producao-use-openssl-rand-hex-32"
+ALGORITHM  = "HS256"
+pwd_ctx    = CryptContext(schemes=["bcrypt"])
+oauth2     = OAuth2PasswordBearer(tokenUrl="/auth/token")
+
+def hash_senha(senha: str) -&gt; str:
+    return pwd_ctx.hash(senha)
+
+def verificar_senha(senha: str, hash_: str) -&gt; bool:
+    return pwd_ctx.verify(senha, hash_)
+
+def criar_token(dados: dict, expira_min: int = 30) -&gt; str:
+    payload = {**dados, "exp": datetime.utcnow() + timedelta(minutes=expira_min)}
+    return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+
+
+@app.post("/auth/token")
+async def login(form: OAuth2PasswordRequestForm = Depends(), db = Depends(get_db)):
+    user = await buscar_por_email(db, form.username)
+    if not user or not verificar_senha(form.password, user.senha_hash):
+        raise HTTPException(401, "Credenciais inválidas")
+    access  = criar_token({"sub": user.id, "email": user.email}, expira_min=30)
+    refresh = criar_token({"sub": user.id, "tipo": "refresh"}, expira_min=60*24*7)
+    return {"access_token": access, "refresh_token": refresh, "token_type": "bearer"}
+
+
+async def get_current_user(token: str = Depends(oauth2), db = Depends(get_db)):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user = await db.get(User, payload["sub"])
+    except JWTError:
+        raise HTTPException(401, "Token inválido")
+    if not user: raise HTTPException(404, "Usuário não encontrado")
+    return user
+
+
+@app.get("/me")
+async def meu_perfil(user = Depends(get_current_user)):
+    return {"id": user.id, "email": user.email}
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-docker" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-cyan-400 bg-cyan-950/40 border-cyan-600/30 mb-2">🐳
+              Guia Infra</span>
+            <h2 class="text-white font-bold text-2xl">Docker Completo</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Dockerfile, Compose, volumes, redes e CI/CD.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-cyan-950/40 border-cyan-600/30">
+            <p class="text-cyan-400 font-semibold text-sm mb-1">📦 Imagem vs Container</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Imagem = receita (template imutável). Container =
+              instância rodando. Uma imagem gera N containers idênticos — isso garante "funciona no meu ambiente" em
+              qualquer lugar.</p>
+          </div>
+          <div class="mb-6 border border-slate-800 rounded-xl overflow-hidden">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Comando</th>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    O que faz</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker run -d -p
+                    8000:8000 app</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Sobe em background, mapeia
+                    porta 8000</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker ps / ps
+                    -a</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Containers rodando / todos
+                    (incluindo parados)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker logs -f
+                    --tail 100 app</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Logs em tempo real,
+                    últimas 100 linhas</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker exec -it
+                    app bash</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Terminal dentro do
+                    container</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker stop / rm
+                    -f app</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Para gracioso / Para e
+                    remove de uma vez</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker stats
+                  </td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">CPU e RAM ao vivo</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker build -t
+                    app:1.0 .</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Constrói imagem da pasta
+                    atual</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">docker system
+                    prune -a</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Libera espaço — remove
+                    tudo não usado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Dockerfile otimizado</h3>
+          <div class="mb-4 p-4 rounded-lg border bg-cyan-950/40 border-cyan-600/30">
+            <p class="text-cyan-400 font-semibold text-sm mb-1">💡 Ordem das camadas</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Docker usa cache por camada. Se requirements.txt não
+              mudou, pip install não roda. Copie requirements ANTES do código.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-cyan-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+FROM python:3.12-slim
+
+WORKDIR /app
+
+# Evita .pyc e buffering no terminal
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
+
+# Libs do sistema (raramente mudam — camada separada)
+RUN apt-get update &amp;&amp; apt-get install -y \
+    libpq-dev gcc curl \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# PRIMEIRO: só o requirements (muda raramente)
+# Se código mudar mas requirements não → cache HIT aqui!
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# DEPOIS: o código (muda frequentemente)
+COPY . .
+
+# Segurança: nunca rodar como root em produção
+RUN adduser --disabled-password --no-create-home appuser \
+    &amp;&amp; chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8000
+CMD ["gunicorn", "config.wsgi:application",
+     "--bind", "0.0.0.0:8000", "--workers", "4"]
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Docker Compose completo</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-cyan-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# docker-compose.yml
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app          # hot reload
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build: .
+    command: celery -A config worker --loglevel=info
+    volumes: [.:/app]
+    env_file: .env
+    depends_on: [web, redis]
+
+volumes:
+  postgres_data:
+  redis_data:
+
+
+# Comandos do dia a dia
+docker compose up -d              # sobe tudo
+docker compose up -d --build      # rebuild + sobe
+docker compose logs -f web        # logs do web
+docker compose exec web python manage.py migrate
+docker compose exec db psql -U postgres -d devpath
+docker compose down               # para (mantém dados)
+docker compose down -v            # para e apaga volumes
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-redis" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-pink-400 bg-pink-950/40 border-pink-600/30 mb-2">🔴
+              Guia Infra</span>
+            <h2 class="text-white font-bold text-2xl">Redis</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Cache, sessões, pub/sub e rate limiting.</p>
+          </div>
+          <div class="mb-6 border border-slate-800 rounded-xl overflow-hidden">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Tipo</th>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Casos de uso</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">String</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Cache de qualquer valor,
+                    contadores, sessões</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Hash</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Objeto/dict — dados do
+                    usuário, configuração</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">List</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Fila FIFO, feed de
+                    atividades</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Set</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Tags, usuários online,
+                    operações de conjunto</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Sorted Set</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Rankings, leaderboard,
+                    rate limiting</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-pink-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+import redis
+
+r = redis.Redis(host="localhost", port=6379, decode_responses=True)
+
+# STRING — cache simples com TTL
+r.set("usuario:1", "Alice", ex=3600)   # expira em 1h
+r.get("usuario:1")                     # "Alice"
+r.ttl("usuario:1")                     # segundos restantes
+r.incr("visitas:home")                 # contador atômico
+
+# HASH — objeto com campos
+r.hset("user:42", mapping={"nome": "Alice", "email": "a@ex.com", "pontos": "150"})
+r.hget("user:42", "nome")              # "Alice"
+r.hgetall("user:42")                   # dict completo
+r.hincrby("user:42", "pontos", 10)     # incrementa pontos
+
+# LIST — fila FIFO
+r.lpush("fila:emails", "email1", "email2")  # adiciona à esquerda
+r.rpop("fila:emails")                       # remove da direita (FIFO)
+r.lrange("fila:emails", 0, -1)             # todos os itens
+
+# SET — sem duplicatas, operações de conjunto
+r.sadd("online", "user:1", "user:2", "user:3")
+r.sismember("online", "user:1")        # True/False
+r.smembers("online")                   # todos
+
+# SORTED SET — ranking por score
+r.zadd("ranking", {"Alice": 1500, "Bob": 1200, "Carol": 1800})
+r.zrevrange("ranking", 0, 2, withscores=True)
+# [(Carol, 1800), (Alice, 1500), (Bob, 1200)]
+r.zrank("ranking", "Alice")            # posição (0-indexed)
+
+
+# Cache Aside Pattern com Django
+from django.core.cache import cache
+
+def get_produto(produto_id: int):
+    cache_key = f"produto:{produto_id}"
+    produto = cache.get(cache_key)
+    if produto is None:
+        produto = Produto.objects.select_related("categoria").get(pk=produto_id)
+        cache.set(cache_key, produto, timeout=300)   # 5 min
+    return produto
+
+
+# Rate limiting com Sorted Set
+import time
+
+def rate_limit(user_id: str, max_req: int = 10, window: int = 60) -&gt; bool:
+    key = f"rl:{user_id}"
+    now = time.time()
+    pipe = r.pipeline()
+    pipe.zremrangebyscore(key, 0, now - window)   # remove expirados
+    pipe.zadd(key, {str(now): now})
+    pipe.expire(key, window)
+    pipe.zcard(key)
+    results = pipe.execute()
+    return results[-1] &lt;= max_req
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-celery" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-yellow-400 bg-yellow-950/40 border-yellow-600/30 mb-2">⚙️
+              Guia Infra</span>
+            <h2 class="text-white font-bold text-2xl">Celery</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Tasks assíncronas, retry, chains, groups e Celery Beat.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-yellow-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# pip install celery[redis]
+
+# config/celery.py
+import os
+from celery import Celery
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+app = Celery("config")
+app.config_from_object("django.conf:settings", namespace="CELERY")
+app.autodiscover_tasks()
+
+# config/__init__.py
+from .celery import app as celery_app
+__all__ = ("celery_app",)
+
+# config/settings.py
+CELERY_BROKER_URL         = config("REDIS_URL")
+CELERY_RESULT_BACKEND     = config("REDIS_URL")
+CELERY_TASK_SERIALIZER    = "json"
+CELERY_TIMEZONE           = "America/Sao_Paulo"
+
+
+# apps/pedidos/tasks.py
+from celery import shared_task
+from celery.utils.log import get_task_logger
+
+logger = get_task_logger(__name__)
+
+@shared_task(bind=True, max_retries=3, default_retry_delay=60)
+def processar_pagamento(self, pedido_id: int) -&gt; dict:
+    try:
+        pedido = Pedido.objects.get(pk=pedido_id)
+        resultado = gateway_pagamento.cobrar(pedido)
+        pedido.status = "pago"
+        pedido.save()
+        return {"status": "ok", "pedido_id": pedido_id}
+    except GatewayError as exc:
+        logger.warning(f"Tentativa {self.request.retries}: {exc}")
+        raise self.retry(exc=exc)   # agenda próxima tentativa
+
+
+# Chamar de uma view
+def finalizar_pedido(request, pedido_id):
+    # delay() = executa agora em background
+    task = processar_pagamento.delay(pedido_id)
+    return JsonResponse({"task_id": task.id})
+
+    # apply_async() = com opções avançadas
+    processar_pagamento.apply_async(
+        args=[pedido_id],
+        countdown=10,   # aguarda 10s antes de executar
+        expires=3600,   # descarta se não executar em 1h
+    )
+
+
+# Celery Beat — agendamento
+from celery.schedules import crontab
+
+app.conf.beat_schedule = {
+    "relatorio-diario": {
+        "task": "apps.relatorios.tasks.gerar_relatorio",
+        "schedule": crontab(hour=8, minute=0),   # todo dia às 8h
+    },
+    "limpeza-semanal": {
+        "task": "apps.core.tasks.limpar_logs",
+        "schedule": crontab(day_of_week="sunday", hour=2),
+    },
+}
+
+# Iniciar no terminal
+celery -A config worker --loglevel=info
+celery -A config beat   --loglevel=info
+celery -A config flower --port=5555     # dashboard web
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-git" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-green-400 bg-green-950/40 border-green-600/30 mb-2">🌿
+              Guia Infra</span>
+            <h2 class="text-white font-bold text-2xl">Git & GitHub</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Branches, rebase, conventional commits e desfazendo erros.
+            </p>
+          </div>
+          <div class="mb-6 border border-slate-800 rounded-xl overflow-hidden">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Comando</th>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Quando usar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git add -p</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Adicionar partes
+                    específicas (hunk a hunk)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git commit
+                    --amend</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Corrigir o último commit
+                    (mensagem ou arquivos)</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git stash /
+                    stash pop</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Guardar mudanças
+                    temporariamente</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git log
+                    --oneline --graph</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Ver histórico visual de
+                    branches</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git diff
+                    main..feature</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Ver o que mudou na branch
+                  </td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">git bisect start
+                  </td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">Encontrar qual commit
+                    introduziu um bug</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Branches e Rebase</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# Criar e trocar para nova branch
+git switch -c feature/auth-jwt
+
+# Rebase interativo — limpar histórico antes do PR
+git rebase -i main
+# Na lista que abre:
+# pick abc123  Adiciona login
+# squash def456  WIP
+# squash ghi789  fix typo
+# → vira 1 commit limpo
+
+# Atualizar branch com main sem criar merge commit
+git fetch origin
+git rebase origin/main
+
+# Deletar branch local e remota após merge
+git branch -d feature/auth-jwt
+git push origin --delete feature/auth-jwt
+
+
+# Conventional Commits
+# formato: tipo(escopo): descrição
+
+# CORRETO:
+git commit -m "feat(auth): adiciona login com JWT"
+git commit -m "fix(pedidos): corrige cálculo de frete"
+git commit -m "docs(readme): atualiza instruções de setup"
+git commit -m "refactor(produtos): extrai ProdutoService"
+git commit -m "test(auth): adiciona testes para refresh token"
+
+# ERRADO:
+git commit -m "ajustes"
+git commit -m "fix"
+git commit -m "WIP"
+
+
+# Desfazendo erros
+
+# Desfazer mudanças no arquivo (antes do add)
+git restore arquivo.py
+
+# Remover do staging (depois do add, antes do commit)
+git restore --staged arquivo.py
+
+# Desfazer o último commit (mantém as mudanças)
+git reset --soft HEAD~1
+
+# Desfazer commit público (sem reescrever histórico)
+git revert HEAD
+
+# Recuperar commit deletado — reflog é seu amigo
+git reflog
+git checkout abc123  # hash do commit perdido
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-linux" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-orange-400 bg-orange-950/40 border-orange-600/30 mb-2">🐧
+              Guia Infra</span>
+            <h2 class="text-white font-bold text-2xl">Linux & Terminal</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Comandos, processos, scripts bash e cron.</p>
+          </div>
+          <div class="mb-6 border border-slate-800 rounded-xl overflow-hidden">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Categoria</th>
+                  <th
+                    class="bg-slate-900/80 text-cyan-400 font-mono text-xs uppercase tracking-wider px-4 py-2.5 text-left border-b border-slate-800">
+                    Comandos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Navegação</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">ls -la, cd, pwd, find,
+                    tree</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Arquivos</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">cat, head, tail -f, less,
+                    cp, mv, rm -rf</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Busca</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">grep -rn, grep -i, find .
+                    -name, locate</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Processos</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">ps aux, kill, pkill, htop,
+                    top</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Rede</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">curl, wget, netstat -tlpn,
+                    ss, ping, nmap</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Permissões</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">chmod 755, chown
+                    user:group, sudo, su</td>
+                </tr>
+                <tr class="hover:bg-slate-800/20 transition-colors">
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400 font-mono">Serviços</td>
+                  <td class="px-4 py-2.5 border-b border-slate-800/50 text-xs text-slate-400">systemctl
+                    start/stop/status/enable/disable</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Comandos essenciais</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-orange-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# find — buscar arquivos
+find . -name "*.py" -type f
+find . -name "*.log" -mtime +7 -delete   # apaga logs &gt; 7 dias
+find . -name "*.py" -exec grep -l "TODO" {} ;   # py com TODO
+
+# grep — buscar conteúdo
+grep -rn "def processar" .      # recursivo, com numero de linha
+grep -i "error" /var/log/app.log | tail -20
+
+# Pipelines — encadear comandos
+cat vendas.csv | sort | uniq -c | sort -rn | head -10
+
+# ps + kill — gerenciar processos
+ps aux | grep python
+kill -15 PID    # SIGTERM — gracioso (espera terminar)
+kill -9  PID    # SIGKILL — força (use com cuidado)
+pkill -f "celery worker"   # mata por nome do processo
+
+# systemctl — serviços
+sudo systemctl status  nginx
+sudo systemctl restart nginx
+sudo systemctl enable  nginx   # inicia no boot
+journalctl -u nginx -f         # logs em tempo real
+
+
+# Script de deploy com tratamento de erro
+#!/bin/bash
+set -e           # para ao primeiro erro
+set -u           # erro se variável não definida
+set -o pipefail  # erro em pipes
+
+APP_DIR="/srv/app"
+BACKUP_DIR="/srv/backups"
+
+echo "Fazendo backup..."
+cp -r "$APP_DIR" "$BACKUP_DIR/$(date +%Y%m%d_%H%M%S)"
+
+echo "Atualizando código..."
+cd "$APP_DIR"
+git pull origin main
+
+echo "Instalando dependências..."
+pip install -r requirements.txt --quiet
+
+echo "Migrando banco..."
+python manage.py migrate --noinput
+
+echo "Coletando estáticos..."
+python manage.py collectstatic --noinput
+
+echo "Reiniciando serviços..."
+sudo systemctl restart gunicorn celery
+
+echo "Deploy concluído!"
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-sql" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-purple-400 bg-purple-950/40 border-purple-600/30 mb-2">📋
+              Guia Dados</span>
+            <h2 class="text-white font-bold text-2xl">SQL Completo</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">JOINs, CTEs, window functions, índices e transações.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">DDL & DML</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+-- Criar tabela
+CREATE TABLE produtos (
+    id          BIGSERIAL PRIMARY KEY,
+    nome        VARCHAR(200) NOT NULL,
+    preco       NUMERIC(10,2) NOT NULL CHECK (preco &gt; 0),
+    estoque     INTEGER DEFAULT 0,
+    categoria_id INTEGER REFERENCES categorias(id),
+    criado_em   TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- CRUD básico
+INSERT INTO produtos (nome, preco, estoque)
+VALUES ('Notebook', 2999.90, 10)
+RETURNING *;   -- retorna a linha inserida
+
+UPDATE produtos SET preco = 2799.90, estoque = estoque - 1
+WHERE id = 1;
+
+DELETE FROM produtos WHERE estoque = 0 RETURNING id;
+
+-- UPSERT (insert ou update)
+INSERT INTO config (chave, valor)
+VALUES ('timeout', '30')
+ON CONFLICT (chave)
+DO UPDATE SET valor = EXCLUDED.valor;
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">JOINs e CTEs</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+-- INNER JOIN — só linhas com correspondência nos dois lados
+SELECT p.nome, c.nome AS categoria
+FROM produtos p
+INNER JOIN categorias c ON p.categoria_id = c.id
+WHERE p.preco &gt; 100;
+
+-- LEFT JOIN — todos da esquerda, null se não tiver match
+SELECT u.email, COUNT(p.id) AS total_pedidos
+FROM usuarios u
+LEFT JOIN pedidos p ON p.usuario_id = u.id
+GROUP BY u.email
+ORDER BY total_pedidos DESC;
+
+-- CTE (WITH) — subquery nomeada, mais legível que subquery
+WITH pedidos_recentes AS (
+    SELECT usuario_id, SUM(total) AS total_gasto
+    FROM pedidos
+    WHERE criado_em &gt;= NOW() - INTERVAL '30 days'
+    GROUP BY usuario_id
+),
+top_clientes AS (
+    SELECT usuario_id FROM pedidos_recentes
+    WHERE total_gasto &gt; 500
+    ORDER BY total_gasto DESC
+    LIMIT 10
+)
+SELECT u.email, pr.total_gasto
+FROM usuarios u
+JOIN pedidos_recentes pr ON pr.usuario_id = u.id
+WHERE u.id IN (SELECT usuario_id FROM top_clientes);
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Window Functions</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+-- ROW_NUMBER — top N por categoria
+SELECT nome, categoria_id, preco,
+       ROW_NUMBER() OVER (PARTITION BY categoria_id ORDER BY preco DESC) AS rank_na_cat
+FROM produtos;
+
+-- Filtrar: top 3 de cada categoria
+SELECT * FROM (
+    SELECT nome, categoria_id, preco,
+           ROW_NUMBER() OVER (PARTITION BY categoria_id ORDER BY preco DESC) AS rn
+    FROM produtos
+) t WHERE rn &lt;= 3;
+
+-- LAG — comparar com a linha anterior
+SELECT mes, receita,
+       LAG(receita) OVER (ORDER BY mes) AS mes_anterior,
+       ROUND((receita - LAG(receita) OVER (ORDER BY mes)) / LAG(receita) OVER (ORDER BY mes) * 100, 1) AS variacao_pct
+FROM receitas_mensais;
+
+-- SUM cumulativo (running total)
+SELECT data, valor,
+       SUM(valor) OVER (ORDER BY data ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS acumulado
+FROM vendas;
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Índices e Performance</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+-- Ver o plano de execução
+EXPLAIN ANALYZE
+SELECT * FROM pedidos WHERE usuario_id = 42 AND status = 'pago';
+
+-- Índice B-tree (padrão) — para igualdade e range
+CREATE INDEX idx_pedidos_usuario ON pedidos (usuario_id);
+
+-- Índice composto — para queries com ambos os campos
+CREATE INDEX idx_pedidos_usuario_status ON pedidos (usuario_id, status);
+
+-- Índice parcial — só os registros ativos (menor, mais rápido)
+CREATE INDEX idx_produtos_ativos ON produtos (criado_em)
+WHERE status = 'ativo';
+
+-- Ver uso dos índices
+SELECT schemaname, tablename, indexname, idx_scan
+FROM pg_stat_user_indexes
+ORDER BY idx_scan ASC;
+-- índices com idx_scan = 0 podem ser removidos
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-sqlalchemy" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-green-400 bg-green-950/40 border-green-600/30 mb-2">🔗
+              Guia Dados</span>
+            <h2 class="text-white font-bold text-2xl">SQLAlchemy 2.x</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">ORM moderno com async, relacionamentos e Alembic.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-green-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# pip install sqlalchemy[asyncio] asyncpg alembic
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy import String, Numeric, ForeignKey, select
+from datetime import datetime
+
+# Engine e session factory
+engine = create_async_engine(
+    "postgresql+asyncpg://user:pass@localhost/dbname",
+    echo=False,   # True para ver SQL no terminal
+)
+AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False)
+
+
+# Base e modelos
+class Base(DeclarativeBase):
+    pass
+
+class Categoria(Base):
+    __tablename__ = "categorias"
+
+    id:   Mapped[int] = mapped_column(primary_key=True)
+    nome: Mapped[str] = mapped_column(String(100), unique=True)
+    produtos: Mapped[list["Produto"]] = relationship(back_populates="categoria")
+
+class Produto(Base):
+    __tablename__ = "produtos"
+
+    id:           Mapped[int]      = mapped_column(primary_key=True)
+    nome:         Mapped[str]      = mapped_column(String(200))
+    preco:        Mapped[float]    = mapped_column(Numeric(10, 2))
+    categoria_id: Mapped[int]      = mapped_column(ForeignKey("categorias.id"))
+    categoria:    Mapped[Categoria] = relationship(back_populates="produtos")
+
+
+# CRUD assíncrono
+async def get_produto(db: AsyncSession, produto_id: int) -&gt; Produto | None:
+    return await db.get(Produto, produto_id)
+
+async def listar_produtos(db: AsyncSession, categoria_id: int | None = None):
+    stmt = select(Produto).order_by(Produto.nome)
+    if categoria_id:
+        stmt = stmt.where(Produto.categoria_id == categoria_id)
+    result = await db.execute(stmt)
+    return result.scalars().all()
+
+async def criar_produto(db: AsyncSession, dados: dict) -&gt; Produto:
+    produto = Produto(**dados)
+    db.add(produto)
+    await db.commit()
+    await db.refresh(produto)
+    return produto
+
+async def atualizar_produto(db: AsyncSession, produto_id: int, dados: dict) -&gt; Produto | None:
+    produto = await db.get(Produto, produto_id)
+    if not produto: return None
+    for k, v in dados.items():
+        setattr(produto, k, v)
+    await db.commit()
+    await db.refresh(produto)
+    return produto
+
+
+# Alembic — migrations
+# alembic init alembic
+# alembic revision --autogenerate -m "cria tabela produtos"
+# alembic upgrade head
+# alembic downgrade -1
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-postgres" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-purple-400 bg-purple-950/40 border-purple-600/30 mb-2">🐘
+              Guia Dados</span>
+            <h2 class="text-white font-bold text-2xl">PostgreSQL Avançado</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">JSONB, full-text search, pg_stat e manutenção.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+-- JSONB — dados semi-estruturados com índice
+ALTER TABLE produtos ADD COLUMN metadados JSONB DEFAULT '{}'::jsonb;
+
+UPDATE produtos
+SET metadados = '{"cor": "preto", "peso_kg": 1.5, "tags": ["notebook", "dell"]}'
+WHERE id = 1;
+
+-- Buscar por campo JSONB
+SELECT nome FROM produtos
+WHERE metadados-&gt;&gt;'cor' = 'preto';
+
+-- Índice GIN para JSONB (busca rápida em qualquer campo)
+CREATE INDEX idx_produtos_metadados ON produtos USING GIN (metadados);
+
+-- Contém operador @&gt;
+SELECT nome FROM produtos
+WHERE metadados @&gt; '{"tags": ["notebook"]}';
+
+
+-- Full-text search nativo
+SELECT nome, ts_rank(search_vector, query) AS rank
+FROM produtos,
+     to_tsquery('portuguese', 'notebook &amp; dell') AS query
+WHERE search_vector @@ query
+ORDER BY rank DESC;
+
+
+-- pg_stat_statements — queries mais lentas
+SELECT query,
+       calls,
+       ROUND(mean_exec_time::numeric, 2) AS media_ms,
+       ROUND(total_exec_time::numeric, 2) AS total_ms
+FROM pg_stat_statements
+ORDER BY mean_exec_time DESC
+LIMIT 20;
+
+
+-- Manutenção
+VACUUM ANALYZE produtos;        -- atualiza estatísticas
+REINDEX TABLE produtos;         -- reconstrói índices
+SELECT pg_size_pretty(pg_total_relation_size('produtos'::regclass));
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-tests" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-pink-400 bg-pink-950/40 border-pink-600/30 mb-2">🧪
+              Guia Qualidade</span>
+            <h2 class="text-white font-bold text-2xl">Testes com pytest</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Fixtures, mocks, parametrize e TDD.</p>
+          </div>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-pink-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# pip install pytest pytest-django factory-boy coverage
+
+# pytest.ini
+[pytest]
+DJANGO_SETTINGS_MODULE = config.settings_test
+python_files = test_*.py
+addopts = -v --tb=short
+
+# config/settings_test.py
+from .settings import *
+DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}}
+CELERY_TASK_ALWAYS_EAGER = True   # tasks rodam sync nos testes
+
+
+# conftest.py
+import pytest
+from rest_framework.test import APIClient
+
+@pytest.fixture
+def api_client():
+    return APIClient()
+
+@pytest.fixture
+def user(db):
+    return UserFactory()
+
+@pytest.fixture
+def auth_client(api_client, user):
+    api_client.force_authenticate(user=user)
+    return api_client
+
+
+# Teste de view com APIClient
+def test_listar_produtos(auth_client, db):
+    ProdutoFactory.create_batch(3)
+    response = auth_client.get("/api/produtos/")
+    assert response.status_code == 200
+    assert len(response.data["results"]) == 3
+
+
+# Factory Boy — dados de teste
+import factory
+from factory.django import DjangoModelFactory
+
+class UserFactory(DjangoModelFactory):
+    class Meta:
+        model = User
+
+    username = factory.Sequence(lambda n: f"user{n}")
+    email    = factory.LazyAttribute(lambda o: f"{o.username}@ex.com")
+    password = factory.PostGenerationMethodCall("set_password", "senha123")
+
+class ProdutoFactory(DjangoModelFactory):
+    class Meta:
+        model = Produto
+
+    nome   = factory.Faker("name", locale="pt_BR")
+    preco  = factory.Faker("pydecimal", left_digits=4, right_digits=2, positive=True)
+    status = "ativo"
+
+
+# Mock — isolar dependências externas
+from unittest.mock import patch, MagicMock
+
+@patch("apps.pagamentos.services.stripe.charge.create")
+def test_processar_pagamento(mock_charge, db):
+    mock_charge.return_value = MagicMock(id="ch_test123", status="succeeded")
+    resultado = processar_pagamento(pedido_id=1)
+    assert resultado["status"] == "pago"
+    mock_charge.assert_called_once()
+
+
+# parametrize — rodar o mesmo teste com vários inputs
+@pytest.mark.parametrize("email,valido", [
+    ("alice@ex.com",     True),
+    ("sem-arroba",       False),
+    ("@semlocal.com",    False),
+    ("user@dominio.com", True),
+])
+def test_validar_email(email, valido):
+    assert validar_email(email) == valido
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-solid" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-purple-400 bg-purple-950/40 border-purple-600/30 mb-2">🏛️
+              Guia Qualidade</span>
+            <h2 class="text-white font-bold text-2xl">SOLID Principles</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Os 5 princípios com exemplos práticos em Python.</p>
+          </div>
+          <div class="mb-4 p-4 rounded-lg border bg-purple-950/40 border-purple-600/30">
+            <p class="text-purple-400 font-semibold text-sm mb-1">💡 Por que SOLID?</p>
+            <p class="text-slate-400 text-sm leading-relaxed">Código SOLID é mais fácil de testar, extender e manter.
+              Cada princípio resolve um problema específico de design.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">S — Single Responsibility</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+# ERRADO — classe com múltiplas responsabilidades
+class Pedido:
+    def calcular_total(self): ...
+    def salvar_no_banco(self): ...
+    def enviar_email(self): ...
+    def gerar_pdf(self): ...
+
+# CERTO — cada classe tem 1 responsabilidade
+class Pedido:
+    def calcular_total(self) -&gt; float: ...
+
+class PedidoRepository:
+    def salvar(self, pedido: Pedido) -&gt; None: ...
+
+class PedidoEmailService:
+    def enviar_confirmacao(self, pedido: Pedido) -&gt; None: ...
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">O — Open/Closed + D — Dependency Inversion</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-purple-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from abc import ABC, abstractmethod
+from typing import Protocol
+
+# Interface (Protocol — duck typing tipado)
+class PedidoRepository(Protocol):
+    def salvar(self, pedido: Pedido) -&gt; None: ...
+    def buscar(self, id: int) -&gt; Pedido | None: ...
+
+
+# Implementações concretas
+class PostgresPedidoRepository:
+    def salvar(self, pedido: Pedido) -&gt; None:
+        # lógica do PostgreSQL
+        ...
+
+class FakePedidoRepository:
+    def __init__(self):
+        self._db: dict = {}
+
+    def salvar(self, pedido: Pedido) -&gt; None:
+        self._db[pedido.id] = pedido
+
+    def buscar(self, id: int) -&gt; Pedido | None:
+        return self._db.get(id)
+
+
+# Service depende da abstração, não da implementação
+class PedidoService:
+    def __init__(self, repo: PedidoRepository):   # injeta a dependência
+        self._repo = repo
+
+    def finalizar(self, pedido_id: int) -&gt; None:
+        pedido = self._repo.buscar(pedido_id)
+        if not pedido:
+            raise ValueError("Pedido não encontrado")
+        pedido.status = "finalizado"
+        self._repo.salvar(pedido)
+
+
+# Em produção
+service = PedidoService(PostgresPedidoRepository())
+
+# Nos testes — sem banco real
+fake_repo = FakePedidoRepository()
+service   = PedidoService(fake_repo)
+service.finalizar(pedido_id=1)
+assert fake_repo.buscar(1).status == "finalizado"
+  </pre>
+          </div>
+        </div>
+        <div id="panel-g-patterns" class="panel hidden p-8 max-w-9xl">
+          <div class="mb-6 pt-8 first:pt-0"><span
+              class="inline-flex items-center font-mono text-xs uppercase tracking-widest px-2.5 py-0.5 rounded-full border text-cyan-400 bg-cyan-950/40 border-cyan-600/30 mb-2">🎨
+              Guia Qualidade</span>
+            <h2 class="text-white font-bold text-2xl">Design Patterns</h2>
+            <p class="text-slate-500 text-sm mt-1 max-w-xl">Factory, Strategy, Observer e Repository em Python.</p>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3">Factory — criar objetos sem conhecer a classe</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-cyan-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from abc import ABC, abstractmethod
+
+class StorageBackend(ABC):
+    @abstractmethod
+    def salvar(self, nome: str, conteudo: bytes) -&gt; str: ...
+
+class LocalStorage(StorageBackend):
+    def salvar(self, nome: str, conteudo: bytes) -&gt; str:
+        path = f"/media/{nome}"
+        with open(path, "wb") as f: f.write(conteudo)
+        return path
+
+class S3Storage(StorageBackend):
+    def salvar(self, nome: str, conteudo: bytes) -&gt; str:
+        s3 = boto3.client("s3")
+        s3.put_object(Bucket="my-bucket", Key=nome, Body=conteudo)
+        return f"https://my-bucket.s3.amazonaws.com/{nome}"
+
+# Factory com registro — extensível sem modificar a factory
+class StorageFactory:
+    _backends: dict = {}
+
+    @classmethod
+    def registrar(cls, nome: str, backend: type) -&gt; None:
+        cls._backends[nome] = backend
+
+    @classmethod
+    def criar(cls, nome: str) -&gt; StorageBackend:
+        if nome not in cls._backends:
+            raise ValueError(f"Backend {nome!r} não registrado")
+        return cls._backends[nome]()
+
+StorageFactory.registrar("local", LocalStorage)
+StorageFactory.registrar("s3",    S3Storage)
+
+# Uso — sem saber qual classe vai criar
+storage = StorageFactory.criar(settings.STORAGE_BACKEND)
+url = storage.salvar("foto.jpg", conteudo)
+  </pre>
+          </div>
+          <h3 class="text-white font-semibold text-sm mb-3 mt-6">Strategy — algoritmos intercambiáveis</h3>
+          <div class="relative mb-4">
+            <button onclick="copyThis(this)"
+              class="absolute top-2 right-2 text-xs font-mono px-2 py-1 rounded bg-slate-800 text-slate-400 hover:text-white border border-slate-700 transition-colors">copiar</button>
+            <pre
+              class="code-block border-l-4 border-cyan-500 bg-slate-950 text-slate-300 font-mono text-xs leading-relaxed p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
+from typing import Protocol
+
+class RegraDesconto(Protocol):
+    def calcular(self, total: float) -&gt; float: ...
+
+class SemDesconto:
+    def calcular(self, total: float) -&gt; float:
+        return total
+
+class DescontoPorcentagem:
+    def __init__(self, pct: float): self.pct = pct
+    def calcular(self, total: float) -&gt; float:
+        return total * (1 - self.pct / 100)
+
+class DescontoValorFixo:
+    def __init__(self, valor: float): self.valor = valor
+    def calcular(self, total: float) -&gt; float:
+        return max(0, total - self.valor)
+
+class Carrinho:
+    def __init__(self, regra: RegraDesconto = SemDesconto()):
+        self._regra = regra
+        self._itens: list[float] = []
+
+    def adicionar(self, preco: float) -&gt; None:
+        self._itens.append(preco)
+
+    def total(self) -&gt; float:
+        return self._regra.calcular(sum(self._itens))
+
+# Trocar estratégia sem mudar o Carrinho
+c = Carrinho(DescontoPorcentagem(10))
+c.adicionar(100)
+c.adicionar(200)
+print(c.total())   # 270.0  (10% off)
+  </pre>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    var current = "home";
+
+    function show(id) {
+      document.querySelectorAll(".panel").forEach(function (el) {
+        el.classList.add("hidden");
+      });
+      var el = document.getElementById("panel-" + id);
+      if (el) { el.classList.remove("hidden"); }
+
+      document.querySelectorAll(".nav-link").forEach(function (btn) {
+        btn.classList.remove("bg-slate-800", "text-white");
+      });
+      var nav = document.getElementById("nav-" + id);
+      if (nav) { nav.classList.add("bg-slate-800", "text-white"); }
+
+      document.getElementById("main-scroll").scrollTop = 0;
+      current = id;
+    }
+
+    function toggleGroup(id) {
+      var el = document.getElementById(id);
+      var arr = document.getElementById("arr-" + id);
+      if (el.classList.contains("hidden")) {
+        el.classList.remove("hidden");
+        arr.style.transform = "rotate(90deg)";
+      } else {
+        el.classList.add("hidden");
+        arr.style.transform = "";
+      }
+    }
+
+    function updatePB() {
+      var el = document.getElementById("main-scroll");
+      var pct = el.scrollTop / (el.scrollHeight - el.clientHeight) * 100;
+      document.getElementById("pb").style.width = pct + "%";
+    }
+
+    function copyThis(btn) {
+      var pre = btn.nextElementSibling;
+      navigator.clipboard.writeText(pre.innerText).then(function () {
+        btn.textContent = "copiado!";
+        btn.style.color = "#4ade80";
+        setTimeout(function () { btn.textContent = "copiar"; btn.style.color = ""; }, 2000);
+      });
+    }
+
+    // Open first group by default
+    toggleGroup("grp-roadmaps");
+    show("home");
+  </script>
+</body>
+
+</html>
