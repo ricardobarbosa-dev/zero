@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap Tailwind CSS — Ricardo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1f2937;
+    --border: #1e3a5f;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  h1, h2, h3, h4 { font-family: 'Syne', sans-serif; }
+  code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Hero */
+  .hero-bg {
+    background: radial-gradient(ellipse at 20% 50%, rgba(56,189,248,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(129,140,248,0.07) 0%, transparent 60%),
+                var(--bg);
+  }
+  .glow-text {
+    background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 0.72rem; font-family: 'JetBrains Mono', monospace;
+    border: 1px solid; font-weight: 700; letter-spacing: 0.05em;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  /* Code blocks */
+  .code-block {
+    background: #050d1a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block .kw { color: #c084fc; }
+  .code-block .cls { color: #38bdf8; }
+  .code-block .str { color: #86efac; }
+  .code-block .tag { color: #f472b6; }
+  .code-block .attr { color: #fbbf24; }
+  .code-block .cmt { color: #475569; font-style: italic; }
+
+  /* Section headers */
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 24px 0 16px;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700; font-size: 0.85rem;
+    color: #0a0f1e; flex-shrink: 0;
+  }
+
+  /* Class reference table */
+  .class-table { width: 100%; border-collapse: collapse; }
+  .class-table th {
+    text-align: left; padding: 10px 14px;
+    background: var(--surface2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--accent);
+    border-bottom: 1px solid var(--border);
+  }
+  .class-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(30,58,95,0.5);
+    font-size: 0.85rem; vertical-align: top;
+  }
+  .class-table tr:hover td { background: rgba(56,189,248,0.04); }
+  .class-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: #38bdf8; font-size: 0.8rem;
+    background: rgba(56,189,248,0.08);
+    padding: 2px 7px; border-radius: 4px;
+    white-space: nowrap;
+  }
+  .class-css {
+    font-family: 'JetBrains Mono', monospace;
+    color: #c084fc; font-size: 0.78rem;
+  }
+
+  /* Preview boxes */
+  .preview {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+
+  /* Nav */
+  .nav-link {
+    display: block; padding: 8px 14px; border-radius: 6px;
+    font-size: 0.82rem; color: var(--muted);
+    text-decoration: none; transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid transparent;
+  }
+  .nav-link:hover { color: var(--accent); border-color: var(--border); background: var(--surface); }
+
+  /* Progress bar */
+  .roadmap-step {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px;
+  }
+  .step-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    flex-shrink: 0; margin-top: 4px;
+  }
+  .step-line {
+    width: 2px; background: var(--border);
+    flex-shrink: 0; margin-left: 6px;
+  }
+
+  /* Responsive demo */
+  .demo-frame {
+    background: #050d1a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .demo-bar {
+    background: var(--surface2);
+    padding: 8px 14px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-in { animation: fadeIn 0.5s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+  /* Tabs */
+  .tab-btn {
+    padding: 8px 18px; border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem; cursor: pointer;
+    border: 1px solid transparent;
+    background: transparent; color: var(--muted);
+    transition: all 0.15s;
+  }
+  .tab-btn.active { background: var(--surface2); border-color: var(--border); color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero-bg" style="padding: 60px 20px 40px;">
+  <div style="max-width: 900px; margin: 0 auto;">
+    <div class="animate-in" style="display:flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+      <span class="badge" style="color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.08);">⚡ Tailwind CSS</span>
+      <span class="badge" style="color: #818cf8; border-color: #818cf8; background: rgba(129,140,248,0.08);">📱 Mobile First</span>
+      <span class="badge" style="color: #86efac; border-color: #86efac; background: rgba(134,239,172,0.08);">🗺️ Roadmap</span>
+    </div>
+
+    <h1 class="animate-in delay-1" style="font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; margin-bottom: 16px;">
+      <span class="glow-text">Roadmap Tailwind CSS</span><br>
+      <span style="color: var(--text); font-size: 0.55em; font-weight: 400;">Do zero à landing page responsiva</span>
+    </h1>
+
+    <p class="animate-in delay-2" style="color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 32px;">
+      Guia completo com classes, exemplos práticos e uma landing page real montada do zero com abordagem <strong style="color: var(--text);">mobile-first</strong>.
+    </p>
+
+    <!-- Stats -->
+    <div class="animate-in delay-3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+      <div class="card" style="padding: 16px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: var(--accent); font-family: 'Syne', sans-serif;">8</div>
+        <div style="font-size: 0.78rem; color: var(--muted);">Fases do Roadmap</div>
+      </div>
+      <div class="card" style="padding: 16px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: #818cf8; font-family: 'Syne', sans-serif;">60+</div>
+        <div style="font-size: 0.78rem; color: var(--muted);">Classes Explicadas</div>
+      </div>
+      <div class="card" style="padding: 16px; text-align: center;">
+        <div style="font-size: 1.8rem; font-weight: 800; color: #86efac; font-family: 'Syne', sans-serif;">1</div>
+        <div style="font-size: 0.78rem; color: var(--muted);">Landing Page Completa</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div style="max-width: 900px; margin: 0 auto; padding: 20px;">
+
+  <!-- FASE 1: CONCEITO -->
+  <div id="fase1">
+    <div class="section-header">
+      <div class="section-num">1</div>
+      <h2 style="font-size: 1.4rem;">Conceito — Como o Tailwind Funciona</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 16px;">
+      <p style="color: var(--muted); line-height: 1.7; margin-bottom: 16px;">
+        O Tailwind é um framework <strong style="color: var(--text);">utility-first</strong>: em vez de escrever CSS separado, você aplica classes diretamente no HTML. Cada classe faz <em>uma coisa só</em>.
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div>
+          <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono';">❌ CSS Tradicional</p>
+          <div class="code-block">
+<span class="cmt">/* styles.css */</span>
+.botao {
+  background: blue;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+}</div>
+        </div>
+        <div>
+          <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono';">✅ Tailwind CSS</p>
+          <div class="code-block">
+<span class="cmt">&lt;!-- HTML com Tailwind --&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"bg-blue-500
+  text-white px-4 py-2
+  rounded-md font-bold"</span><span class="tag">&gt;</span>
+  Clique
+<span class="tag">&lt;/button&gt;</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Setup -->
+    <div class="card" style="padding: 20px; margin-bottom: 24px;">
+      <h3 style="font-size: 1rem; margin-bottom: 12px; color: var(--accent);">⚙️ Setup Rápido (CDN para estudos)</h3>
+      <div class="code-block">
+<span class="tag">&lt;head&gt;</span>
+  <span class="cmt">&lt;!-- Adicione no &lt;head&gt; do seu HTML --&gt;</span>
+  <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.tailwindcss.com"</span><span class="tag">&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="cmt">&lt;!-- Para produção, use o CLI (gera CSS otimizado): --&gt;</span>
+<span class="cmt"># npm install -D tailwindcss</span>
+<span class="cmt"># npx tailwindcss init</span></div>
+    </div>
+  </div>
+
+  <!-- FASE 2: ESPAÇAMENTO -->
+  <div id="fase2">
+    <div class="section-header">
+      <div class="section-num">2</div>
+      <h2 style="font-size: 1.4rem;">Espaçamento — Padding & Margin</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 16px;">
+        O Tailwind usa uma escala de <strong style="color: var(--text);">4px</strong> por padrão. Cada número = n × 4px.
+      </p>
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr>
+            <th>Classe</th><th>CSS Gerado</th><th>Valor</th><th>Uso</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">p-4</span></td><td><span class="class-css">padding: 1rem</span></td><td>16px</td><td>Padding em todos os lados</td></tr>
+            <tr><td><span class="class-name">px-4</span></td><td><span class="class-css">padding: 0 1rem</span></td><td>16px</td><td>Padding horizontal (left + right)</td></tr>
+            <tr><td><span class="class-name">py-4</span></td><td><span class="class-css">padding: 1rem 0</span></td><td>16px</td><td>Padding vertical (top + bottom)</td></tr>
+            <tr><td><span class="class-name">pt-4</span></td><td><span class="class-css">padding-top: 1rem</span></td><td>16px</td><td>Padding top</td></tr>
+            <tr><td><span class="class-name">pb-8</span></td><td><span class="class-css">padding-bottom: 2rem</span></td><td>32px</td><td>Padding bottom</td></tr>
+            <tr><td><span class="class-name">m-4</span></td><td><span class="class-css">margin: 1rem</span></td><td>16px</td><td>Margin em todos os lados</td></tr>
+            <tr><td><span class="class-name">mx-auto</span></td><td><span class="class-css">margin: 0 auto</span></td><td>auto</td><td>Centralizar horizontalmente</td></tr>
+            <tr><td><span class="class-name">my-8</span></td><td><span class="class-css">margin: 2rem 0</span></td><td>32px</td><td>Margin vertical</td></tr>
+            <tr><td><span class="class-name">mt-16</span></td><td><span class="class-css">margin-top: 4rem</span></td><td>64px</td><td>Margin top grande</td></tr>
+            <tr><td><span class="class-name">gap-4</span></td><td><span class="class-css">gap: 1rem</span></td><td>16px</td><td>Espaço entre filhos (flex/grid)</td></tr>
+            <tr><td><span class="class-name">space-y-4</span></td><td><span class="class-css">margin-top em filhos</span></td><td>16px</td><td>Espaço vertical entre filhos</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="code-block" style="margin-top: 14px;">
+<span class="cmt">&lt;!-- Escala de referência --&gt;</span>
+<span class="cmt">&lt;!-- 1=4px | 2=8px | 3=12px | 4=16px | 5=20px | 6=24px --&gt;</span>
+<span class="cmt">&lt;!-- 8=32px | 10=40px | 12=48px | 16=64px | 20=80px | 24=96px --&gt;</span></div>
+    </div>
+  </div>
+
+  <!-- FASE 3: TIPOGRAFIA -->
+  <div id="fase3">
+    <div class="section-header">
+      <div class="section-num">3</div>
+      <h2 style="font-size: 1.4rem;">Tipografia</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr><th>Classe</th><th>CSS Gerado</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">text-sm</span></td><td><span class="class-css">font-size: 0.875rem</span></td><td>Texto pequeno (14px)</td></tr>
+            <tr><td><span class="class-name">text-base</span></td><td><span class="class-css">font-size: 1rem</span></td><td>Padrão (16px)</td></tr>
+            <tr><td><span class="class-name">text-lg</span></td><td><span class="class-css">font-size: 1.125rem</span></td><td>Levemente maior (18px)</td></tr>
+            <tr><td><span class="class-name">text-xl</span></td><td><span class="class-css">font-size: 1.25rem</span></td><td>Extra large (20px)</td></tr>
+            <tr><td><span class="class-name">text-2xl</span></td><td><span class="class-css">font-size: 1.5rem</span></td><td>Subtítulo (24px)</td></tr>
+            <tr><td><span class="class-name">text-4xl</span></td><td><span class="class-css">font-size: 2.25rem</span></td><td>Título grande (36px)</td></tr>
+            <tr><td><span class="class-name">text-6xl</span></td><td><span class="class-css">font-size: 3.75rem</span></td><td>Hero title (60px)</td></tr>
+            <tr><td><span class="class-name">font-normal</span></td><td><span class="class-css">font-weight: 400</span></td><td>Peso normal</td></tr>
+            <tr><td><span class="class-name">font-semibold</span></td><td><span class="class-css">font-weight: 600</span></td><td>Semibold</td></tr>
+            <tr><td><span class="class-name">font-bold</span></td><td><span class="class-css">font-weight: 700</span></td><td>Negrito</td></tr>
+            <tr><td><span class="class-name">font-extrabold</span></td><td><span class="class-css">font-weight: 800</span></td><td>Extra negrito</td></tr>
+            <tr><td><span class="class-name">leading-tight</span></td><td><span class="class-css">line-height: 1.25</span></td><td>Entrelinha compacta</td></tr>
+            <tr><td><span class="class-name">leading-relaxed</span></td><td><span class="class-css">line-height: 1.625</span></td><td>Entrelinha confortável</td></tr>
+            <tr><td><span class="class-name">tracking-wide</span></td><td><span class="class-css">letter-spacing: 0.025em</span></td><td>Espaço entre letras</td></tr>
+            <tr><td><span class="class-name">text-center</span></td><td><span class="class-css">text-align: center</span></td><td>Centralizar texto</td></tr>
+            <tr><td><span class="class-name">uppercase</span></td><td><span class="class-css">text-transform: uppercase</span></td><td>MAIÚSCULAS</td></tr>
+            <tr><td><span class="class-name">truncate</span></td><td><span class="class-css">overflow: hidden + ellipsis</span></td><td>Cortar texto longo com "..."</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 4: CORES -->
+  <div id="fase4">
+    <div class="section-header">
+      <div class="section-num">4</div>
+      <h2 style="font-size: 1.4rem;">Cores — Background, Texto & Border</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 16px;">
+        O padrão é <code style="background: rgba(56,189,248,0.1); padding: 2px 6px; border-radius: 4px; color: #38bdf8;">{propriedade}-{cor}-{intensidade}</code>. Intensidades: 50 (mais claro) → 950 (mais escuro).
+      </p>
+
+      <!-- Paleta visual -->
+      <div style="margin-bottom: 20px;">
+        <p style="font-size: 0.78rem; color: var(--muted); margin-bottom: 8px; font-family: 'JetBrains Mono';">Paleta sky (exemplo):</p>
+        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#f0f9ff;"></div><span style="font-size:0.6rem; color:var(--muted);">50</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#e0f2fe;"></div><span style="font-size:0.6rem; color:var(--muted);">100</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#7dd3fc;"></div><span style="font-size:0.6rem; color:var(--muted);">300</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#38bdf8;"></div><span style="font-size:0.6rem; color:var(--muted);">400</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#0ea5e9;"></div><span style="font-size:0.6rem; color:var(--muted);">500</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#0284c7;"></div><span style="font-size:0.6rem; color:var(--muted);">600</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#0369a1;"></div><span style="font-size:0.6rem; color:var(--muted);">700</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#075985;"></div><span style="font-size:0.6rem; color:var(--muted);">800</span></div>
+          <div style="text-align:center"><div style="width:40px; height:40px; border-radius:6px; background:#0c4a6e;"></div><span style="font-size:0.6rem; color:var(--muted);">900</span></div>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr><th>Classe</th><th>CSS Gerado</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">bg-sky-500</span></td><td><span class="class-css">background-color: #0ea5e9</span></td><td>Fundo azul médio</td></tr>
+            <tr><td><span class="class-name">bg-white</span></td><td><span class="class-css">background-color: #fff</span></td><td>Fundo branco</td></tr>
+            <tr><td><span class="class-name">bg-gray-900</span></td><td><span class="class-css">background-color: #111827</span></td><td>Fundo escuro</td></tr>
+            <tr><td><span class="class-name">bg-gradient-to-r</span></td><td><span class="class-css">background-image: linear-gradient(to right...)</span></td><td>Gradient horizontal</td></tr>
+            <tr><td><span class="class-name">from-sky-500</span></td><td><span class="class-css">--tw-gradient-from: #0ea5e9</span></td><td>Cor inicial do gradient</td></tr>
+            <tr><td><span class="class-name">to-indigo-600</span></td><td><span class="class-css">--tw-gradient-to: #4f46e5</span></td><td>Cor final do gradient</td></tr>
+            <tr><td><span class="class-name">text-gray-700</span></td><td><span class="class-css">color: #374151</span></td><td>Texto cinza escuro</td></tr>
+            <tr><td><span class="class-name">text-white</span></td><td><span class="class-css">color: #fff</span></td><td>Texto branco</td></tr>
+            <tr><td><span class="class-name">border-gray-200</span></td><td><span class="class-css">border-color: #e5e7eb</span></td><td>Borda cinza clara</td></tr>
+            <tr><td><span class="class-name">bg-opacity-50</span></td><td><span class="class-css">--tw-bg-opacity: 0.5</span></td><td>Fundo semitransparente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block" style="margin-top: 14px;">
+<span class="cmt">&lt;!-- Cores disponíveis: slate, gray, zinc, neutral, stone, --&gt;</span>
+<span class="cmt">&lt;!-- red, orange, amber, yellow, lime, green, emerald, teal, --&gt;</span>
+<span class="cmt">&lt;!-- cyan, sky, blue, indigo, violet, purple, fuchsia, pink, rose --&gt;</span>
+
+<span class="cmt">&lt;!-- Gradient com 3 cores --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-gradient-to-r from-sky-400 via-indigo-500 to-purple-600"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+  </div>
+
+  <!-- FASE 5: FLEXBOX & GRID -->
+  <div id="fase5">
+    <div class="section-header">
+      <div class="section-num">5</div>
+      <h2 style="font-size: 1.4rem;">Layout — Flexbox & Grid</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <h3 style="color: var(--accent); font-size: 1rem; margin-bottom: 14px;">Flexbox</h3>
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr><th>Classe</th><th>CSS Gerado</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">flex</span></td><td><span class="class-css">display: flex</span></td><td>Ativar flexbox</td></tr>
+            <tr><td><span class="class-name">flex-col</span></td><td><span class="class-css">flex-direction: column</span></td><td>Empilhar verticalmente</td></tr>
+            <tr><td><span class="class-name">flex-row</span></td><td><span class="class-css">flex-direction: row</span></td><td>Alinhar horizontalmente</td></tr>
+            <tr><td><span class="class-name">flex-wrap</span></td><td><span class="class-css">flex-wrap: wrap</span></td><td>Quebrar linha quando necessário</td></tr>
+            <tr><td><span class="class-name">items-center</span></td><td><span class="class-css">align-items: center</span></td><td>Alinhar ao centro (eixo cruzado)</td></tr>
+            <tr><td><span class="class-name">items-start</span></td><td><span class="class-css">align-items: flex-start</span></td><td>Alinhar ao início</td></tr>
+            <tr><td><span class="class-name">justify-center</span></td><td><span class="class-css">justify-content: center</span></td><td>Centralizar (eixo principal)</td></tr>
+            <tr><td><span class="class-name">justify-between</span></td><td><span class="class-css">justify-content: space-between</span></td><td>Espaço entre elementos</td></tr>
+            <tr><td><span class="class-name">justify-end</span></td><td><span class="class-css">justify-content: flex-end</span></td><td>Alinhar à direita</td></tr>
+            <tr><td><span class="class-name">flex-1</span></td><td><span class="class-css">flex: 1 1 0%</span></td><td>Filho ocupa espaço disponível</td></tr>
+            <tr><td><span class="class-name">shrink-0</span></td><td><span class="class-css">flex-shrink: 0</span></td><td>Não encolhe</td></tr>
+            <tr><td><span class="class-name">self-center</span></td><td><span class="class-css">align-self: center</span></td><td>Alinha um filho específico</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="color: var(--accent); font-size: 1rem; margin: 20px 0 14px;">Grid</h3>
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr><th>Classe</th><th>CSS Gerado</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">grid</span></td><td><span class="class-css">display: grid</span></td><td>Ativar grid</td></tr>
+            <tr><td><span class="class-name">grid-cols-1</span></td><td><span class="class-css">grid-template-columns: repeat(1, minmax(0, 1fr))</span></td><td>1 coluna</td></tr>
+            <tr><td><span class="class-name">grid-cols-2</span></td><td><span class="class-css">grid-template-columns: repeat(2, ...)</span></td><td>2 colunas iguais</td></tr>
+            <tr><td><span class="class-name">grid-cols-3</span></td><td><span class="class-css">grid-template-columns: repeat(3, ...)</span></td><td>3 colunas iguais</td></tr>
+            <tr><td><span class="class-name">col-span-2</span></td><td><span class="class-css">grid-column: span 2</span></td><td>Ocupa 2 colunas</td></tr>
+            <tr><td><span class="class-name">col-span-full</span></td><td><span class="class-css">grid-column: 1 / -1</span></td><td>Ocupa toda a largura</td></tr>
+            <tr><td><span class="class-name">gap-4</span></td><td><span class="class-css">gap: 1rem</span></td><td>Espaço entre células</td></tr>
+            <tr><td><span class="class-name">gap-x-4</span></td><td><span class="class-css">column-gap: 1rem</span></td><td>Espaço horizontal</td></tr>
+            <tr><td><span class="class-name">gap-y-8</span></td><td><span class="class-css">row-gap: 2rem</span></td><td>Espaço vertical</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block" style="margin-top: 14px;">
+<span class="cmt">&lt;!-- Padrão mobile-first muito usado: 1 col → 2 col → 3 col --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div&gt;</span>Card 1<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div&gt;</span>Card 2<span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;div&gt;</span>Card 3<span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/div&gt;</span></div>
+    </div>
+  </div>
+
+  <!-- FASE 6: RESPONSIVIDADE -->
+  <div id="fase6">
+    <div class="section-header">
+      <div class="section-num">6</div>
+      <h2 style="font-size: 1.4rem;">Responsividade — Breakpoints Mobile-First</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 16px;">
+        No Tailwind, <strong style="color: var(--text);">você começa pelo mobile</strong> e adiciona prefixos para telas maiores. Sem prefixo = mobile. Com prefixo = a partir daquele breakpoint.
+      </p>
+
+      <div style="overflow-x: auto; margin-bottom: 16px;">
+        <table class="class-table">
+          <thead><tr><th>Prefixo</th><th>Largura mínima</th><th>Dispositivo</th></tr></thead>
+          <tbody>
+            <tr><td><span class="class-name">(sem prefixo)</span></td><td>0px</td><td>📱 Mobile (base)</td></tr>
+            <tr><td><span class="class-name">sm:</span></td><td>640px</td><td>📱 Mobile grande / tablet pequeno</td></tr>
+            <tr><td><span class="class-name">md:</span></td><td>768px</td><td>📟 Tablet</td></tr>
+            <tr><td><span class="class-name">lg:</span></td><td>1024px</td><td>💻 Laptop</td></tr>
+            <tr><td><span class="class-name">xl:</span></td><td>1280px</td><td>🖥️ Desktop</td></tr>
+            <tr><td><span class="class-name">2xl:</span></td><td>1536px</td><td>🖥️ Tela grande</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="code-block">
+<span class="cmt">&lt;!-- LEITURA: mobile=col-1, tablet=col-2, desktop=col-3 --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"</span><span class="tag">&gt;</span>
+
+<span class="cmt">&lt;!-- Texto: pequeno no mobile, grande no desktop --&gt;</span>
+<span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="str">"text-2xl md:text-4xl lg:text-6xl"</span><span class="tag">&gt;</span>Título<span class="tag">&lt;/h1&gt;</span>
+
+<span class="cmt">&lt;!-- Esconder/mostrar por breakpoint --&gt;</span>
+<span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="str">"hidden md:flex"</span><span class="tag">&gt;</span>Menu Desktop<span class="tag">&lt;/nav&gt;</span>
+<span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="str">"md:hidden"</span><span class="tag">&gt;</span>☰ Menu Mobile<span class="tag">&lt;/button&gt;</span>
+
+<span class="cmt">&lt;!-- Padding responsivo --&gt;</span>
+<span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"px-4 md:px-8 lg:px-16 py-12 md:py-20"</span><span class="tag">&gt;</span></div>
+    </div>
+  </div>
+
+  <!-- FASE 7: COMPONENTES COMUNS -->
+  <div id="fase7">
+    <div class="section-header">
+      <div class="section-num">7</div>
+      <h2 style="font-size: 1.4rem;">Classes Essenciais — Dimensões, Borda, Sombra</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <div style="overflow-x: auto;">
+        <table class="class-table">
+          <thead><tr><th>Classe</th><th>CSS Gerado</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td colspan="3" style="color: var(--accent); font-size: 0.78rem; font-family: 'JetBrains Mono'; padding: 10px 14px 4px; background: rgba(56,189,248,0.04);">📐 Dimensões</td></tr>
+            <tr><td><span class="class-name">w-full</span></td><td><span class="class-css">width: 100%</span></td><td>Largura total do pai</td></tr>
+            <tr><td><span class="class-name">w-1/2</span></td><td><span class="class-css">width: 50%</span></td><td>Metade da largura</td></tr>
+            <tr><td><span class="class-name">max-w-4xl</span></td><td><span class="class-css">max-width: 56rem (896px)</span></td><td>Largura máxima do container</td></tr>
+            <tr><td><span class="class-name">max-w-7xl</span></td><td><span class="class-css">max-width: 80rem (1280px)</span></td><td>Container padrão desktop</td></tr>
+            <tr><td><span class="class-name">h-screen</span></td><td><span class="class-css">height: 100vh</span></td><td>Altura total da tela</td></tr>
+            <tr><td><span class="class-name">h-16</span></td><td><span class="class-css">height: 4rem (64px)</span></td><td>Altura navbar típica</td></tr>
+            <tr><td><span class="class-name">min-h-screen</span></td><td><span class="class-css">min-height: 100vh</span></td><td>Mínimo: tela toda</td></tr>
+            <tr><td colspan="3" style="color: var(--accent); font-size: 0.78rem; font-family: 'JetBrains Mono'; padding: 10px 14px 4px; background: rgba(56,189,248,0.04);">🔲 Bordas</td></tr>
+            <tr><td><span class="class-name">border</span></td><td><span class="class-css">border-width: 1px</span></td><td>Borda simples</td></tr>
+            <tr><td><span class="class-name">border-2</span></td><td><span class="class-css">border-width: 2px</span></td><td>Borda mais grossa</td></tr>
+            <tr><td><span class="class-name">rounded</span></td><td><span class="class-css">border-radius: 0.25rem</span></td><td>Cantos arredondados</td></tr>
+            <tr><td><span class="class-name">rounded-lg</span></td><td><span class="class-css">border-radius: 0.5rem</span></td><td>Cantos bem arredondados</td></tr>
+            <tr><td><span class="class-name">rounded-full</span></td><td><span class="class-css">border-radius: 9999px</span></td><td>Círculo / pill</td></tr>
+            <tr><td colspan="3" style="color: var(--accent); font-size: 0.78rem; font-family: 'JetBrains Mono'; padding: 10px 14px 4px; background: rgba(56,189,248,0.04);">🌟 Sombras & Efeitos</td></tr>
+            <tr><td><span class="class-name">shadow</span></td><td><span class="class-css">box-shadow: 0 1px 3px ...</span></td><td>Sombra sutil</td></tr>
+            <tr><td><span class="class-name">shadow-lg</span></td><td><span class="class-css">box-shadow: 0 10px 15px ...</span></td><td>Sombra pronunciada</td></tr>
+            <tr><td><span class="class-name">shadow-xl</span></td><td><span class="class-css">box-shadow: 0 20px 25px ...</span></td><td>Sombra dramática</td></tr>
+            <tr><td><span class="class-name">opacity-75</span></td><td><span class="class-css">opacity: 0.75</span></td><td>75% visível</td></tr>
+            <tr><td><span class="class-name">blur-sm</span></td><td><span class="class-css">filter: blur(4px)</span></td><td>Desfoque suave</td></tr>
+            <tr><td colspan="3" style="color: var(--accent); font-size: 0.78rem; font-family: 'JetBrains Mono'; padding: 10px 14px 4px; background: rgba(56,189,248,0.04);">🎯 Posicionamento</td></tr>
+            <tr><td><span class="class-name">relative</span></td><td><span class="class-css">position: relative</span></td><td>Referência para absolute</td></tr>
+            <tr><td><span class="class-name">absolute</span></td><td><span class="class-css">position: absolute</span></td><td>Posição absoluta</td></tr>
+            <tr><td><span class="class-name">fixed</span></td><td><span class="class-css">position: fixed</span></td><td>Fixo na tela (navbar)</td></tr>
+            <tr><td><span class="class-name">sticky</span></td><td><span class="class-css">position: sticky</span></td><td>Gruda ao rolar</td></tr>
+            <tr><td><span class="class-name">inset-0</span></td><td><span class="class-css">top/right/bottom/left: 0</span></td><td>Cobre o pai inteiro</td></tr>
+            <tr><td><span class="class-name">z-10</span></td><td><span class="class-css">z-index: 10</span></td><td>Camada de sobreposição</td></tr>
+            <tr><td colspan="3" style="color: var(--accent); font-size: 0.78rem; font-family: 'JetBrains Mono'; padding: 10px 14px 4px; background: rgba(56,189,248,0.04);">🔄 Transições & Hover</td></tr>
+            <tr><td><span class="class-name">transition</span></td><td><span class="class-css">transition-property: all ...</span></td><td>Ativar transições CSS</td></tr>
+            <tr><td><span class="class-name">duration-300</span></td><td><span class="class-css">transition-duration: 300ms</span></td><td>Velocidade da transição</td></tr>
+            <tr><td><span class="class-name">ease-in-out</span></td><td><span class="class-css">transition-timing-function: ease-in-out</span></td><td>Curva suave</td></tr>
+            <tr><td><span class="class-name">hover:bg-sky-600</span></td><td><span class="class-css">:hover { background: #0284c7 }</span></td><td>Cor no hover</td></tr>
+            <tr><td><span class="class-name">hover:scale-105</span></td><td><span class="class-css">:hover { transform: scale(1.05) }</span></td><td>Aumentar no hover</td></tr>
+            <tr><td><span class="class-name">hover:shadow-xl</span></td><td><span class="class-css">:hover { box-shadow: ... }</span></td><td>Sombra no hover</td></tr>
+            <tr><td><span class="class-name">focus:ring-2</span></td><td><span class="class-css">:focus { outline: ring... }</span></td><td>Acessibilidade focus</td></tr>
+            <tr><td><span class="class-name">cursor-pointer</span></td><td><span class="class-css">cursor: pointer</span></td><td>Cursor de clique</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FASE 8: LANDING PAGE COMPLETA -->
+  <div id="fase8">
+    <div class="section-header">
+      <div class="section-num">8</div>
+      <h2 style="font-size: 1.4rem;">Landing Page Completa — Mobile First</h2>
+    </div>
+
+    <div class="card" style="padding: 20px; margin-bottom: 12px;">
+      <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 20px;">
+        Abaixo está o código completo de uma landing page responsiva. Cada seção tem comentários explicando as classes.
+      </p>
+
+      <!-- Tabs -->
+      <div style="display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;">
+        <button class="tab-btn active" onclick="showTab('code')">📄 Código</button>
+        <button class="tab-btn" onclick="showTab('preview')">👁️ Preview</button>
+        <button class="tab-btn" onclick="showTab('anatomy')">🔬 Anatomia</button>
+      </div>
+
+      <!-- CODE TAB -->
+      <div id="tab-code" class="tab-content active">
+        <div class="code-block" style="font-size: 0.76rem; max-height: 600px; overflow-y: auto;">
+<span class="cmt">&lt;!-- ================================================= --&gt;</span>
+<span class="cmt">&lt;!-- LANDING PAGE COMPLETA COM TAILWIND - MOBILE FIRST --&gt;</span>
+<span class="cmt">&lt;!-- ================================================= --&gt;</span>
+<span class="tag">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="str">"pt-BR"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="str">"UTF-8"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="str">"viewport"</span> <span class="attr">content</span>=<span class="str">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;script</span> <span class="attr">src</span>=<span class="str">"https://cdn.tailwindcss.com"</span><span class="tag">&gt;&lt;/script&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+
+<span class="tag">&lt;body</span> <span class="attr">class</span>=<span class="str">"bg-white text-gray-900"</span><span class="tag">&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== NAVBAR ===== --&gt;</span>
+  <span class="cmt">&lt;!-- sticky top-0: gruda no topo ao rolar --&gt;</span>
+  <span class="cmt">&lt;!-- z-50: fica acima de tudo --&gt;</span>
+  <span class="cmt">&lt;!-- backdrop-blur-md: efeito vidro fosco --&gt;</span>
+  <span class="tag">&lt;nav</span> <span class="attr">class</span>=<span class="str">"sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100"</span><span class="tag">&gt;</span>
+    <span class="cmt">&lt;!-- max-w-7xl mx-auto: container centralizado --&gt;</span>
+    <span class="cmt">&lt;!-- px-4 md:px-8: padding responsivo --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between"</span><span class="tag">&gt;</span>
+
+      <span class="cmt">&lt;!-- Logo --&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"font-bold text-xl text-sky-600"</span><span class="tag">&gt;</span>MyApp<span class="tag">&lt;/span&gt;</span>
+
+      <span class="cmt">&lt;!-- Menu: escondido no mobile, visível no md+ --&gt;</span>
+      <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="str">"hidden md:flex items-center gap-8 text-sm font-medium text-gray-600"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"hover:text-sky-600 transition"</span><span class="tag">&gt;</span>Funcionalidades<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"hover:text-sky-600 transition"</span><span class="tag">&gt;</span>Preços<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"hover:text-sky-600 transition"</span><span class="tag">&gt;</span>Sobre<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="tag">&lt;/ul&gt;</span>
+
+      <span class="cmt">&lt;!-- CTA Botão --&gt;</span>
+      <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span>
+         <span class="attr">class</span>=<span class="str">"bg-sky-500 text-white px-4 py-2 rounded-lg text-sm font-semibold
+                hover:bg-sky-600 transition duration-200 shadow-sm"</span><span class="tag">&gt;</span>
+        Começar grátis
+      <span class="tag">&lt;/a&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/nav&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== HERO ===== --&gt;</span>
+  <span class="cmt">&lt;!-- py-20 md:py-32: padding generoso, maior no desktop --&gt;</span>
+  <span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"py-20 md:py-32 px-4"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-4xl mx-auto text-center"</span><span class="tag">&gt;</span>
+
+      <span class="cmt">&lt;!-- Badge --&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"inline-block bg-sky-50 text-sky-600 text-sm font-semibold
+                    px-4 py-1.5 rounded-full mb-6 border border-sky-200"</span><span class="tag">&gt;</span>
+        🚀 Versão 2.0 disponível!
+      <span class="tag">&lt;/span&gt;</span>
+
+      <span class="cmt">&lt;!-- Título: pequeno no mobile, enorme no desktop --&gt;</span>
+      <span class="tag">&lt;h1</span> <span class="attr">class</span>=<span class="str">"text-4xl md:text-6xl font-extrabold leading-tight mb-6"</span><span class="tag">&gt;</span>
+        A ferramenta que vai<br>
+        <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-sky-500"</span><span class="tag">&gt;</span>transformar seu negócio<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;/h1&gt;</span>
+
+      <span class="cmt">&lt;!-- Subtítulo --&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-lg md:text-xl text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed"</span><span class="tag">&gt;</span>
+        Simplifique sua gestão com inteligência artificial. Comece em minutos, sem cartão de crédito.
+      <span class="tag">&lt;/p&gt;</span>
+
+      <span class="cmt">&lt;!-- Botões: empilhados no mobile, lado a lado no sm+ --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"flex flex-col sm:flex-row gap-4 justify-center"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span>
+           <span class="attr">class</span>=<span class="str">"bg-sky-500 text-white px-8 py-4 rounded-xl font-semibold text-lg
+                  hover:bg-sky-600 transition duration-200 shadow-lg hover:shadow-xl
+                  hover:scale-105"</span><span class="tag">&gt;</span>
+          Começar grátis →
+        <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span>
+           <span class="attr">class</span>=<span class="str">"border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl font-semibold text-lg
+                  hover:border-sky-300 hover:text-sky-600 transition duration-200"</span><span class="tag">&gt;</span>
+          Ver demo
+        <span class="tag">&lt;/a&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== FEATURES ===== --&gt;</span>
+  <span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"py-20 bg-gray-50 px-4"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-7xl mx-auto"</span><span class="tag">&gt;</span>
+
+      <span class="cmt">&lt;!-- Cabeçalho da seção --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"text-center mb-16"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="str">"text-3xl md:text-4xl font-bold mb-4"</span><span class="tag">&gt;</span>
+          Tudo que você precisa
+        <span class="tag">&lt;/h2&gt;</span>
+        <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-gray-500 text-lg max-w-xl mx-auto"</span><span class="tag">&gt;</span>
+          Recursos poderosos para times de todos os tamanhos.
+        <span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+
+      <span class="cmt">&lt;!-- Grid: 1 coluna mobile → 3 colunas desktop --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"grid grid-cols-1 md:grid-cols-3 gap-8"</span><span class="tag">&gt;</span>
+
+        <span class="cmt">&lt;!-- Card de feature --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-white rounded-2xl p-8 shadow-sm border border-gray-100
+                    hover:shadow-md transition duration-300 hover:-translate-y-1"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"text-3xl mb-4"</span><span class="tag">&gt;</span>⚡<span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-xl mb-2"</span><span class="tag">&gt;</span>Ultra rápido<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-gray-500 leading-relaxed"</span><span class="tag">&gt;</span>
+            Performance otimizada para qualquer dispositivo.
+          <span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-white rounded-2xl p-8 shadow-sm border border-gray-100
+                    hover:shadow-md transition duration-300 hover:-translate-y-1"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"text-3xl mb-4"</span><span class="tag">&gt;</span>🔒<span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-xl mb-2"</span><span class="tag">&gt;</span>100% Seguro<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-gray-500 leading-relaxed"</span><span class="tag">&gt;</span>
+            Criptografia de ponta a ponta nos seus dados.
+          <span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-white rounded-2xl p-8 shadow-sm border border-gray-100
+                    hover:shadow-md transition duration-300 hover:-translate-y-1"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"text-3xl mb-4"</span><span class="tag">&gt;</span>📊<span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-xl mb-2"</span><span class="tag">&gt;</span>Analytics avançado<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-gray-500 leading-relaxed"</span><span class="tag">&gt;</span>
+            Relatórios em tempo real para decisões melhores.
+          <span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== PREÇOS ===== --&gt;</span>
+  <span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"py-20 px-4"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-5xl mx-auto"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="str">"text-3xl md:text-4xl font-bold text-center mb-16"</span><span class="tag">&gt;</span>Planos simples<span class="tag">&lt;/h2&gt;</span>
+
+      <span class="cmt">&lt;!-- Cards: empilhados → lado a lado → com destaque no meio --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"grid grid-cols-1 md:grid-cols-3 gap-6 items-start"</span><span class="tag">&gt;</span>
+
+        <span class="cmt">&lt;!-- Plano Básico --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"border border-gray-200 rounded-2xl p-8"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-lg mb-2"</span><span class="tag">&gt;</span>Básico<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-4xl font-extrabold mb-6"</span><span class="tag">&gt;</span>R$0<span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-sm font-normal text-gray-400"</span><span class="tag">&gt;</span>/mês<span class="tag">&lt;/span&gt;&lt;/p&gt;</span>
+          <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="str">"space-y-3 text-gray-600 mb-8"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span><span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-green-500"</span><span class="tag">&gt;</span>✓<span class="tag">&lt;/span&gt;</span> 3 projetos<span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span><span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-green-500"</span><span class="tag">&gt;</span>✓<span class="tag">&lt;/span&gt;</span> 1GB storage<span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;/ul&gt;</span>
+          <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"block text-center border-2 border-gray-200 py-3 rounded-xl font-semibold hover:border-sky-400 transition"</span><span class="tag">&gt;</span>Começar<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="cmt">&lt;!-- Plano Pro (destaque) --&gt;</span>
+        <span class="cmt">&lt;!-- ring-2: anel de destaque ao redor --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-sky-500 text-white rounded-2xl p-8 ring-4 ring-sky-200
+                    shadow-2xl relative"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-amber-900
+                        text-xs font-bold px-4 py-1 rounded-full"</span><span class="tag">&gt;</span>
+            ⭐ POPULAR
+          <span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-lg mb-2"</span><span class="tag">&gt;</span>Pro<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-4xl font-extrabold mb-6"</span><span class="tag">&gt;</span>R$49<span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-sm font-normal opacity-75"</span><span class="tag">&gt;</span>/mês<span class="tag">&lt;/span&gt;&lt;/p&gt;</span>
+          <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="str">"space-y-3 mb-8 opacity-90"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span>✓ Projetos ilimitados<span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span>✓ 50GB storage<span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span>✓ Suporte prioritário<span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;/ul&gt;</span>
+          <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"block text-center bg-white text-sky-600 py-3 rounded-xl font-bold hover:bg-sky-50 transition"</span><span class="tag">&gt;</span>Começar agora<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="cmt">&lt;!-- Plano Enterprise --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"border border-gray-200 rounded-2xl p-8"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;h3</span> <span class="attr">class</span>=<span class="str">"font-bold text-lg mb-2"</span><span class="tag">&gt;</span>Enterprise<span class="tag">&lt;/h3&gt;</span>
+          <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-4xl font-extrabold mb-6"</span><span class="tag">&gt;</span>Custom<span class="tag">&lt;/p&gt;</span>
+          <span class="tag">&lt;ul</span> <span class="attr">class</span>=<span class="str">"space-y-3 text-gray-600 mb-8"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span><span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-green-500"</span><span class="tag">&gt;</span>✓<span class="tag">&lt;/span&gt;</span> Tudo do Pro<span class="tag">&lt;/li&gt;</span>
+            <span class="tag">&lt;li</span> <span class="attr">class</span>=<span class="str">"flex items-center gap-2"</span><span class="tag">&gt;</span><span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"text-green-500"</span><span class="tag">&gt;</span>✓<span class="tag">&lt;/span&gt;</span> SLA garantido<span class="tag">&lt;/li&gt;</span>
+          <span class="tag">&lt;/ul&gt;</span>
+          <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span> <span class="attr">class</span>=<span class="str">"block text-center border-2 border-gray-200 py-3 rounded-xl font-semibold hover:border-sky-400 transition"</span><span class="tag">&gt;</span>Falar com vendas<span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== CTA FINAL ===== --&gt;</span>
+  <span class="tag">&lt;section</span> <span class="attr">class</span>=<span class="str">"bg-sky-500 py-20 px-4 text-white text-center"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;h2</span> <span class="attr">class</span>=<span class="str">"text-3xl md:text-4xl font-bold mb-4"</span><span class="tag">&gt;</span>Pronto para começar?<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-sky-100 mb-8 text-lg"</span><span class="tag">&gt;</span>Junte-se a mais de 10.000 usuários satisfeitos.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span>
+       <span class="attr">class</span>=<span class="str">"inline-block bg-white text-sky-600 px-10 py-4 rounded-xl font-bold text-lg
+              hover:bg-sky-50 transition shadow-lg"</span><span class="tag">&gt;</span>
+      Criar conta gratuita →
+    <span class="tag">&lt;/a&gt;</span>
+  <span class="tag">&lt;/section&gt;</span>
+
+  <span class="cmt">&lt;!-- ===== FOOTER ===== --&gt;</span>
+  <span class="tag">&lt;footer</span> <span class="attr">class</span>=<span class="str">"bg-gray-900 text-gray-400 py-12 px-4"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="attr">class</span>=<span class="str">"font-bold text-white text-lg"</span><span class="tag">&gt;</span>MyApp<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;p</span> <span class="attr">class</span>=<span class="str">"text-sm"</span><span class="tag">&gt;</span>© 2025 MyApp. Todos os direitos reservados.<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/footer&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></div>
+      </div>
+
+      <!-- PREVIEW TAB -->
+      <div id="tab-preview" class="tab-content">
+        <div class="demo-frame">
+          <div class="demo-bar">
+            <div class="demo-dot" style="background:#ff5f57;"></div>
+            <div class="demo-dot" style="background:#febc2e;"></div>
+            <div class="demo-dot" style="background:#28c840;"></div>
+            <span style="font-size: 0.78rem; color: var(--muted); font-family: 'JetBrains Mono'; margin-left: 8px;">myapp.com.br</span>
+          </div>
+          <iframe srcdoc='<!DOCTYPE html><html><head><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-white text-gray-900 text-sm"><nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100"><div class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between"><span class="font-bold text-lg text-sky-600">MyApp</span><ul class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-600"><li><a href="#" class="hover:text-sky-600">Funcionalidades</a></li><li><a href="#" class="hover:text-sky-600">Preços</a></li></ul><a href="#" class="bg-sky-500 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-sky-600 transition">Começar grátis</a></div></nav><section class="py-16 px-4"><div class="max-w-4xl mx-auto text-center"><span class="inline-block bg-sky-50 text-sky-600 text-xs font-semibold px-4 py-1.5 rounded-full mb-6 border border-sky-200">🚀 Versão 2.0 disponível!</span><h1 class="text-4xl font-extrabold leading-tight mb-6">A ferramenta que vai<br><span class="text-sky-500">transformar seu negócio</span></h1><p class="text-base text-gray-500 mb-8 max-w-xl mx-auto leading-relaxed">Simplifique sua gestão com IA. Comece em minutos, sem cartão de crédito.</p><div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#" class="bg-sky-500 text-white px-8 py-3 rounded-xl font-semibold hover:bg-sky-600 transition shadow-lg">Começar grátis →</a><a href="#" class="border-2 border-gray-200 text-gray-700 px-8 py-3 rounded-xl font-semibold hover:border-sky-300 transition">Ver demo</a></div></div></section><section class="py-16 bg-gray-50 px-4"><div class="max-w-5xl mx-auto"><div class="text-center mb-10"><h2 class="text-3xl font-bold mb-2">Tudo que você precisa</h2><p class="text-gray-500">Recursos poderosos para times de todos os tamanhos.</p></div><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"><div class="text-3xl mb-3">⚡</div><h3 class="font-bold text-lg mb-1">Ultra rápido</h3><p class="text-gray-500 text-sm">Performance otimizada para qualquer dispositivo.</p></div><div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"><div class="text-3xl mb-3">🔒</div><h3 class="font-bold text-lg mb-1">100% Seguro</h3><p class="text-gray-500 text-sm">Criptografia de ponta a ponta nos seus dados.</p></div><div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition"><div class="text-3xl mb-3">📊</div><h3 class="font-bold text-lg mb-1">Analytics avançado</h3><p class="text-gray-500 text-sm">Relatórios em tempo real para decisões melhores.</p></div></div></div></section><section class="py-16 px-4"><div class="max-w-4xl mx-auto"><h2 class="text-3xl font-bold text-center mb-12">Planos simples</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start"><div class="border border-gray-200 rounded-2xl p-6"><h3 class="font-bold text-lg mb-2">Básico</h3><p class="text-3xl font-extrabold mb-4">R$0<span class="text-sm font-normal text-gray-400">/mês</span></p><ul class="space-y-2 text-gray-600 mb-6 text-sm"><li class="flex items-center gap-2"><span class="text-green-500">✓</span> 3 projetos</li><li class="flex items-center gap-2"><span class="text-green-500">✓</span> 1GB storage</li></ul><a href="#" class="block text-center border-2 border-gray-200 py-2.5 rounded-xl font-semibold text-sm">Começar</a></div><div class="bg-sky-500 text-white rounded-2xl p-6 ring-4 ring-sky-200 shadow-2xl relative"><span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-amber-400 text-amber-900 text-xs font-bold px-4 py-1 rounded-full">⭐ POPULAR</span><h3 class="font-bold text-lg mb-2">Pro</h3><p class="text-3xl font-extrabold mb-4">R$49<span class="text-sm font-normal opacity-75">/mês</span></p><ul class="space-y-2 mb-6 opacity-90 text-sm"><li class="flex items-center gap-2">✓ Ilimitado</li><li class="flex items-center gap-2">✓ 50GB</li><li class="flex items-center gap-2">✓ Suporte</li></ul><a href="#" class="block text-center bg-white text-sky-600 py-2.5 rounded-xl font-bold text-sm">Começar</a></div><div class="border border-gray-200 rounded-2xl p-6"><h3 class="font-bold text-lg mb-2">Enterprise</h3><p class="text-3xl font-extrabold mb-4">Custom</p><ul class="space-y-2 text-gray-600 mb-6 text-sm"><li class="flex items-center gap-2"><span class="text-green-500">✓</span> Tudo do Pro</li><li class="flex items-center gap-2"><span class="text-green-500">✓</span> SLA garantido</li></ul><a href="#" class="block text-center border-2 border-gray-200 py-2.5 rounded-xl font-semibold text-sm">Falar</a></div></div></div></section><section class="bg-sky-500 py-16 px-4 text-white text-center"><h2 class="text-3xl font-bold mb-3">Pronto para começar?</h2><p class="text-sky-100 mb-6">Junte-se a mais de 10.000 usuários.</p><a href="#" class="inline-block bg-white text-sky-600 px-8 py-3 rounded-xl font-bold hover:bg-sky-50 transition shadow-lg">Criar conta gratuita →</a></section><footer class="bg-gray-900 text-gray-400 py-8 px-4"><div class="max-w-7xl mx-auto flex justify-between items-center"><span class="font-bold text-white">MyApp</span><p class="text-xs">© 2025 MyApp.</p></div></footer></body></html>'
+            style="width: 100%; height: 600px; border: none; background: white;">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- ANATOMY TAB -->
+      <div id="tab-anatomy" class="tab-content">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+
+          <div class="card" style="padding: 16px; border-left: 3px solid #38bdf8;">
+            <p style="font-size: 0.78rem; color: var(--accent); font-family: 'JetBrains Mono'; margin-bottom: 8px;">🧱 NAVBAR</p>
+            <div class="code-block" style="font-size: 0.76rem;">
+<span class="str">"sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100"</span>
+<span class="cmt">↑ sticky+top-0: gruda no topo | z-50: acima de tudo | /90: 90% opaco | backdrop-blur: efeito vidro</span>
+
+<span class="str">"max-w-7xl mx-auto px-4 h-16 flex items-center justify-between"</span>
+<span class="cmt">↑ container 1280px | centraliza | padding | altura 64px | flex | centro vertical | espaça extremos</span></div>
+          </div>
+
+          <div class="card" style="padding: 16px; border-left: 3px solid #818cf8;">
+            <p style="font-size: 0.78rem; color: #818cf8; font-family: 'JetBrains Mono'; margin-bottom: 8px;">🦸 HERO</p>
+            <div class="code-block" style="font-size: 0.76rem;">
+<span class="str">"text-4xl md:text-6xl font-extrabold leading-tight"</span>
+<span class="cmt">↑ mobile: 36px | desktop: 60px | peso máximo | entrelinha compacta</span>
+
+<span class="str">"flex flex-col sm:flex-row gap-4 justify-center"</span>
+<span class="cmt">↑ mobile: botões empilhados | sm+: lado a lado | gap entre eles | centralizados</span></div>
+          </div>
+
+          <div class="card" style="padding: 16px; border-left: 3px solid #86efac;">
+            <p style="font-size: 0.78rem; color: #86efac; font-family: 'JetBrains Mono'; margin-bottom: 8px;">🃏 FEATURE CARDS</p>
+            <div class="code-block" style="font-size: 0.76rem;">
+<span class="str">"grid grid-cols-1 md:grid-cols-3 gap-8"</span>
+<span class="cmt">↑ mobile: 1 coluna | tablet+: 3 colunas | espaço de 32px</span>
+
+<span class="str">"hover:shadow-md transition duration-300 hover:-translate-y-1"</span>
+<span class="cmt">↑ sombra no hover | transição 300ms | levanta 4px no hover (efeito flutuante)</span></div>
+          </div>
+
+          <div class="card" style="padding: 16px; border-left: 3px solid #fbbf24;">
+            <p style="font-size: 0.78rem; color: #fbbf24; font-family: 'JetBrains Mono'; margin-bottom: 8px;">💎 CARD DESTAQUE (Pricing)</p>
+            <div class="code-block" style="font-size: 0.76rem;">
+<span class="str">"bg-sky-500 text-white rounded-2xl p-8 ring-4 ring-sky-200 shadow-2xl relative"</span>
+<span class="cmt">↑ fundo colorido | texto branco | cantos suaves | ring=borda externa | sombra dramática | relative p/ badge absoluto</span>
+
+<span class="str">"absolute -top-3 left-1/2 -translate-x-1/2"</span>
+<span class="cmt">↑ posição absoluta | 12px acima do topo | centraliza com left+translate (truque clássico!)</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DICAS FINAIS -->
+  <div style="margin: 24px 0;">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #86efac, #22d3ee);">💡</div>
+      <h2 style="font-size: 1.4rem;">Dicas & Truques Avançados</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
+
+      <div class="card" style="padding: 16px;">
+        <h4 style="color: var(--accent); margin-bottom: 10px; font-size: 0.9rem;">🎯 Centralizar qualquer coisa</h4>
+        <div class="code-block" style="font-size: 0.76rem;">
+<span class="cmt">&lt;!-- Método 1: Flex --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"flex items-center justify-center"</span><span class="tag">&gt;</span>
+
+<span class="cmt">&lt;!-- Método 2: Absolute center --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"absolute top-1/2 left-1/2
+              -translate-x-1/2 -translate-y-1/2"</span><span class="tag">&gt;</span>
+
+<span class="cmt">&lt;!-- Método 3: Grid --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"grid place-items-center"</span><span class="tag">&gt;</span></div>
+      </div>
+
+      <div class="card" style="padding: 16px;">
+        <h4 style="color: #818cf8; margin-bottom: 10px; font-size: 0.9rem;">🌙 Dark Mode</h4>
+        <div class="code-block" style="font-size: 0.76rem;">
+<span class="cmt">&lt;!-- dark: aplica no modo escuro --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"bg-white dark:bg-gray-900
+             text-gray-900 dark:text-white"</span><span class="tag">&gt;</span>
+
+<span class="cmt">&lt;!-- No tailwind.config.js: --&gt;</span>
+<span class="kw">module</span>.exports = {
+  darkMode: <span class="str">'class'</span>, <span class="cmt">// ou 'media'</span>
+}</div>
+      </div>
+
+      <div class="card" style="padding: 16px;">
+        <h4 style="color: #86efac; margin-bottom: 10px; font-size: 0.9rem;">📦 Container padrão</h4>
+        <div class="code-block" style="font-size: 0.76rem;">
+<span class="cmt">&lt;!-- Padrão que você vai repetir MUITO: --&gt;</span>
+<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"max-w-7xl mx-auto px-4 md:px-8"</span><span class="tag">&gt;</span>
+  <span class="cmt">&lt;!-- Conteúdo --&gt;</span>
+<span class="tag">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- max-w-7xl = 1280px máx --&gt;</span>
+<span class="cmt">&lt;!-- mx-auto = centraliza --&gt;</span>
+<span class="cmt">&lt;!-- px-4 md:px-8 = padding responsivo --&gt;</span></div>
+      </div>
+
+      <div class="card" style="padding: 16px;">
+        <h4 style="color: #fbbf24; margin-bottom: 10px; font-size: 0.9rem;">🖼️ Imagem responsiva</h4>
+        <div class="code-block" style="font-size: 0.76rem;">
+<span class="cmt">&lt;!-- Imagem que se adapta --&gt;</span>
+<span class="tag">&lt;img</span>
+  <span class="attr">class</span>=<span class="str">"w-full h-64 object-cover rounded-xl"</span>
+  <span class="attr">src</span>=<span class="str">"foto.jpg"</span>
+  <span class="attr">alt</span>=<span class="str">"Descrição"</span>
+<span class="tag">/&gt;</span>
+<span class="cmt">&lt;!-- object-cover = mantém proporção --&gt;</span>
+<span class="cmt">&lt;!-- object-center = centraliza o foco --&gt;</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROADMAP VISUAL -->
+  <div style="margin: 24px 0 40px;">
+    <div class="section-header">
+      <div class="section-num" style="background: linear-gradient(135deg, #c084fc, #f472b6);">🗺️</div>
+      <h2 style="font-size: 1.4rem;">Sua Ordem de Estudo</h2>
+    </div>
+
+    <div class="card" style="padding: 20px;">
+      <div style="position: relative; padding-left: 32px;">
+        <!-- Line -->
+        <div style="position: absolute; left: 6px; top: 20px; bottom: 20px; width: 2px; background: linear-gradient(to bottom, #38bdf8, #818cf8, #c084fc, #86efac);"></div>
+
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: #38bdf8; position: absolute; left: 0; margin-top: 3px; flex-shrink: 0;"></div>
+            <div>
+              <p style="font-weight: 700; margin-bottom: 4px;">Semana 1–2: Fundamentos</p>
+              <p style="color: var(--muted); font-size: 0.85rem;">Espaçamento (p, m, gap) → Tipografia → Cores → Display (flex, grid)</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: #818cf8; position: absolute; left: 0; margin-top: 3px;"></div>
+            <div>
+              <p style="font-weight: 700; margin-bottom: 4px;">Semana 3: Layouts</p>
+              <p style="color: var(--muted); font-size: 0.85rem;">Flexbox completo → Grid → Responsividade com prefixos (sm:, md:, lg:)</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: #c084fc; position: absolute; left: 0; margin-top: 3px;"></div>
+            <div>
+              <p style="font-weight: 700; margin-bottom: 4px;">Semana 4: Componentes</p>
+              <p style="color: var(--muted); font-size: 0.85rem;">Navbar, cards, botões, formulários, badges → Hover, focus, transições</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: #86efac; position: absolute; left: 0; margin-top: 3px;"></div>
+            <div>
+              <p style="font-weight: 700; margin-bottom: 4px;">Semana 5–6: Projeto real</p>
+              <p style="color: var(--muted); font-size: 0.85rem;">Landing page completa → Dark mode → Otimização com CLI → Integrar com Django/Flask/FastAPI</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="width: 14px; height: 14px; border-radius: 50%; background: #fbbf24; position: absolute; left: 0; margin-top: 3px;"></div>
+            <div>
+              <p style="font-weight: 700; margin-bottom: 4px;">Avançado: Configuração e Plugins</p>
+              <p style="color: var(--muted); font-size: 0.85rem;">tailwind.config.js → Temas customizados → Plugins (@tailwindcss/forms, typography) → Purge CSS</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
