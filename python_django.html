@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap Python & Django</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background: #0f172a;
+        }
+
+        .card {
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+        <h1 class="text-5xl font-bold mb-3">
+            🚀 Roadmap Python + Django
+        </h1>
+
+        <p class="text-slate-400 text-lg">
+            Plano de estudos para conseguir sua primeira vaga como Desenvolvedor Python/Django.
+        </p>
+    </div>
+
+    <!-- Progress -->
+    <div class="bg-slate-800 rounded-2xl p-6 mb-8 shadow-lg">
+
+        <div class="flex justify-between mb-3">
+            <span class="font-semibold">
+                Progresso Geral
+            </span>
+
+            <span id="progressText">
+                0%
+            </span>
+        </div>
+
+        <div class="w-full h-5 bg-slate-700 rounded-full overflow-hidden">
+
+            <div
+                id="progressBar"
+                class="h-full bg-green-500 transition-all duration-500"
+                style="width:0%">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Conteúdo -->
+    <div class="grid md:grid-cols-2 gap-6">
+
+        <!-- Python -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+            <h2 class="text-2xl font-bold mb-4 text-green-400">
+                🐍 Python
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Variáveis
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Tipos de dados
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    If / Else
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    For e While
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Funções
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Listas
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Dicionários
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Arquivos
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Tratamento de Erros
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    POO
+                </label>
+
+            </div>
+        </div>
+
+        <!-- SQL -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">
+                🗄 SQL
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    SELECT
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    INSERT
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    UPDATE
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    DELETE
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    WHERE
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    JOIN
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    GROUP BY
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    PostgreSQL
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Front-End -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+
+            <h2 class="text-2xl font-bold mb-4 text-yellow-400">
+                🌐 Front-End
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    HTML Semântico
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Flexbox
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Grid
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    DOM
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Eventos
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Fetch API
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Django -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+
+            <h2 class="text-2xl font-bold mb-4 text-green-500">
+                ⚡ Django
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    URLs
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Views
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Templates
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Models
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    ORM
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Forms
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Login e Cadastro
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Permissões
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Middleware
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Signals
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- APIs -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+
+            <h2 class="text-2xl font-bold mb-4 text-purple-400">
+                🔌 APIs
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    JSON
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    REST API
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    DRF
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Serializers
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    ViewSets
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    JWT
+                </label>
+
+            </div>
+
+        </div>
+
+        <!-- Deploy -->
+        <div class="card bg-slate-800 rounded-2xl p-6 shadow-lg">
+
+            <h2 class="text-2xl font-bold mb-4 text-red-400">
+                🚀 Deploy e Mercado
+            </h2>
+
+            <div class="space-y-3">
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Git
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    GitHub
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Linux
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Docker
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Nginx
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Gunicorn
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Railway
+                </label>
+
+                <label class="block">
+                    <input type="checkbox" class="study-item">
+                    Render
+                </label>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.study-item');
+
+    function updateProgress() {
+
+        const total = checkboxes.length;
+
+        const checked =
+            document.querySelectorAll('.study-item:checked').length;
+
+        const percent =
+            Math.round((checked / total) * 100);
+
+        document.getElementById('progressBar').style.width =
+            percent + '%';
+
+        document.getElementById('progressText').innerText =
+            percent + '%';
+
+        const data = [];
+
+        checkboxes.forEach(cb => {
+            data.push(cb.checked);
+        });
+
+        localStorage.setItem(
+            'roadmap-python-django',
+            JSON.stringify(data)
+        );
+    }
+
+    function loadProgress() {
+
+        const saved =
+            JSON.parse(
+                localStorage.getItem('roadmap-python-django')
+            );
+
+        if (!saved) return;
+
+        checkboxes.forEach((cb, index) => {
+            cb.checked = saved[index];
+        });
+
+        updateProgress();
+    }
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', updateProgress);
+    });
+
+    loadProgress();
+</script>
+
+</body>
+</html>

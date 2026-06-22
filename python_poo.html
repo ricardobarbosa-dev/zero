@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Python OOP — Guia Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .code-font { font-family: 'Fira Code', monospace; }
+        .terminal-shadow { box-shadow: 0 20px 40px -15px rgba(0,0,0,0.7); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-300 antialiased selection:bg-rose-500/30 selection:text-rose-200">
+
+    <aside class="hidden xl:flex flex-col w-64 h-screen fixed left-0 top-0 bg-slate-900/40 border-r border-slate-800/60 p-6 justify-between">
+        <div class="space-y-8">
+            <div class="flex items-center gap-2 px-2">
+                <div class="w-3 h-3 bg-rose-500 rounded-full"></div>
+                <span class="font-bold text-white tracking-wider text-sm font-mono">POO_PLAYBOOK</span>
+            </div>
+            <nav class="space-y-1 text-sm font-medium">
+                <a href="#fase-iniciante" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all">
+                    <span class="text-xs font-mono text-slate-600">01</span> Conceitos Base
+                </a>
+                <a href="#fase-intermediaria" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all">
+                    <span class="text-xs font-mono text-slate-600">02</span> Herança e Reuso
+                </a>
+                <a href="#fase-avancada" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all">
+                    <span class="text-xs font-mono text-slate-600">03</span> Polimorfismo Real
+                </a>
+                <a href="#fase-expert" class="flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all">
+                    <span class="text-xs font-mono text-slate-600">04</span> Proteção de Dados
+                </a>
+            </nav>
+        </div>
+        <div class="text-xs text-slate-600 font-mono px-2">v2.0 // 2026</div>
+    </aside>
+
+    <div class="xl:pl-64">
+        <main class="max-w-4xl mx-auto px-6 py-16 space-y-32">
+            
+            <header class="space-y-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-rose-500 font-mono bg-rose-500/10 px-3 py-1 rounded-full">
+                    Do Zero ao Código de Produção
+                </span>
+                <h1 class="text-5xl font-black text-white tracking-tight leading-none sm:text-6xl">
+                    Programação Orientada a Objetos Sem Segredos.
+                </h1>
+                <p class="text-slate-400 text-lg leading-relaxed max-w-2xl">
+                    Esqueça explicações abstratas. Aqui está o mapeamento completo de como a POO estrutura sistemas reais, dividido por níveis de complexidade.
+                </p>
+            </header>
+
+            <section id="fase-iniciante" class="space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <span class="text-xs font-mono text-rose-500 font-bold uppercase tracking-wider">Nível 01 — Iniciante</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Classes, Atributos e Construtor (__init__)</h2>
+                </div>
+                <p class="text-slate-400">
+                    <strong class="text-white">Quando usar:</strong> Sempre que você precisar agrupar dados e comportamentos relacionados para não deixar variáveis soltas no seu script. 
+                    <br><em class="text-xs text-slate-500">Exemplo real: Gerenciar os dados de uma conta de usuário em um sistema.</em>
+                </p>
+
+                <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+                    <div class="bg-slate-800/40 px-4 py-2 text-xs font-mono text-slate-400">usuario.py</div>
+                    <pre class="p-6 text-xs sm:text-sm code-font leading-relaxed overflow-x-auto text-rose-100">
+<span class="text-pink-400">class</span> <span class="text-yellow-300">Usuario</span>:
+    <span class="text-pink-400">def</span> <span class="text-blue-400">__init__</span>(<span class="text-orange-400">self</span>, username, email):
+        <span class="text-orange-400">self</span>.username = username  <span class="text-slate-500"># Atributo</span>
+        <span class="text-orange-400">self</span>.email = email        <span class="text-slate-500"># Atributo</span>
+        <span class="text-orange-400">self</span>.esta_ativo = <span class="text-amber-500">True</span>   <span class="text-slate-500"># Atributo padrão</span>
+
+    <span class="text-pink-400">def</span> <span class="text-blue-400">desativar</span>(<span class="text-orange-400">self</span>):        <span class="text-slate-500"># Método (Ação)</span>
+        <span class="text-orange-400">self</span>.esta_ativo = <span class="text-amber-500">False</span>
+
+<span class="text-slate-500"># Usando o molde para criar instâncias reais</span>
+user_1 = <span class="text-yellow-300">Usuario</span>(<span class="text-emerald-400">"rick_dev"</span>, <span class="text-emerald-400">"rick@email.com"</span>)
+user_1.<span class="text-blue-400">desativar</span>()
+<span class="text-pink-400">print</span>(f<span class="text-emerald-400">"Status do {user_1.username}: {user_1.esta_ativo}"</span>)</pre>
+                </div>
+
+                <div class="terminal-shadow bg-black border border-emerald-500/30 rounded-lg p-4 font-mono text-sm">
+                    <div class="text-slate-500 text-xs mb-1">$ python usuario.py</div>
+                    <div class="text-emerald-400">Status do rick_dev: False</div>
+                </div>
+            </section>
+
+            <section id="fase-intermediaria" class="space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <span class="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider">Nível 02 — Intermediário</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Herança e Reaproveitamento Eficiente</h2>
+                </div>
+                <p class="text-slate-400">
+                    <strong class="text-white">Quando usar:</strong> Quando você tem múltiplos tipos de entidades que compartilham a mesma base estrutural, mas possuem regras de negócio ou permissões adicionais.
+                    <br><em class="text-xs text-slate-500">Exemplo real: Separar usuários comuns de Administradores em um portal de gerenciamento.</em>
+                </p>
+
+                <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+                    <div class="bg-slate-800/40 px-4 py-2 text-xs font-mono text-slate-400">usuarios_roles.py</div>
+                    <pre class="p-6 text-xs sm:text-sm code-font leading-relaxed overflow-x-auto text-cyan-100">
+<span class="text-pink-400">class</span> <span class="text-yellow-300">Usuario</span>: <span class="text-slate-500"># Classe Base (Pai)</span>
+    <span class="text-pink-400">def</span> <span class="text-blue-400">__init__</span>(<span class="text-orange-400">self</span>, username):
+        <span class="text-orange-400">self</span>.username = username
+
+    <span class="text-pink-400">def</span> <span class="text-blue-400">obter_dashboard</span>(<span class="text-orange-400">self</span>):
+        <span class="text-pink-400">return</span> <span class="text-emerald-400">"Painel Visual Padrão"</span>
+
+<span class="text-pink-400">class</span> <span class="text-yellow-300">Admin</span>(<span class="text-cyan-400">Usuario</span>): <span class="text-slate-500"># Classe Especializada (Filha)</span>
+    <span class="text-pink-400">def</span> <span class="text-blue-400">__init__</span>(<span class="text-orange-400">self</span>, username, nivel_acesso):
+        <span class="text-pink-400">super</span>().<span class="text-blue-400">__init__</span>(username) <span class="text-slate-500"># Herda o construtor do Pai</span>
+        <span class="text-orange-400">self</span>.nivel_acesso = nivel_acesso
+
+    <span class="text-pink-400">def</span> <span class="text-blue-400">deletar_banco_de_dados</span>(<span class="text-orange-400">self</span>): <span class="text-slate-500"># Exclusivo de Admin</span>
+        <span class="text-pink-400">return</span> <span class="text-emerald-400">"Executando DROP DATABASE..."</span>
+
+adm = <span class="text-yellow-300">Admin</span>(<span class="text-emerald-400">"rick_admin"</span>, <span class="text-amber-500">5</span>)
+<span class="text-pink-400">print</span>(adm.<span class="text-blue-400">obter_dashboard</span>())
+<span class="text-pink-400">print</span>(adm.<span class="text-blue-400">deletar_banco_de_dados</span>())</pre>
+                </div>
+
+                <div class="terminal-shadow bg-black border border-emerald-500/30 rounded-lg p-4 font-mono text-sm">
+                    <div class="text-slate-500 text-xs mb-1">$ python usuarios_roles.py</div>
+                    <div class="text-emerald-400">Painel Visual Padrão</div>
+                    <div class="text-red-400">Executando DROP DATABASE...</div>
+                </div>
+            </section>
+
+            <section id="fase-avancada" class="space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <span class="text-xs font-mono text-indigo-400 font-bold uppercase tracking-wider">Nível 03 — Avançado</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Polimorfismo Aplicado à Arquitetura</h2>
+                </div>
+                <p class="text-slate-400">
+                    <strong class="text-white">Quando usar:</strong> Quando o núcleo do seu sistema precisa interagir com ferramentas externas (como gateways de pagamento ou enviadores de e-mail), mas a forma exata de como cada um executa a tarefa não importa para o fluxo principal.
+                    <br><em class="text-xs text-slate-500">Exemplo real: Processador de pagamentos aceitando PIX e Cartão de Crédito de forma dinâmica.</em>
+                </p>
+
+                
+
+                <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+                    <div class="bg-slate-800/40 px-4 py-2 text-xs font-mono text-slate-400">checkout.py</div>
+                    <pre class="p-6 text-xs sm:text-sm code-font leading-relaxed overflow-x-auto text-indigo-100">
+<span class="text-pink-400">class</span> <span class="text-yellow-300">MetodoPagamento</span>:
+    <span class="text-pink-400">def</span> <span class="text-blue-400">processar</span>(<span class="text-orange-400">self</span>, valor):
+        <span class="text-pink-400">raise</span> <span class="text-yellow-300">NotImplementedError</span>(<span class="text-emerald-400">"Subclasses devem implementar este método"</span>)
+
+<span class="text-pink-400">class</span> <span class="text-yellow-300">PagamentoPix</span>(<span class="text-indigo-400">MetodoPagamento</span>):
+    <span class="text-pink-400">def</span> <span class="text-blue-400">processar</span>(<span class="text-orange-400">self</span>, valor):
+        <span class="text-pink-400">return</span> f<span class="text-emerald-400">"Gerando QR Code para pagamento de R$ {valor:.2f}"</span>
+
+<span class="text-pink-400">class</span> <span class="text-yellow-300">PagamentoCartao</span>(<span class="text-indigo-400">MetodoPagamento</span>):
+    <span class="text-pink-400">def</span> <span class="text-blue-400">processar</span>(<span class="text-orange-400">self</span>, valor):
+        <span class="text-pink-400">return</span> f<span class="text-emerald-400">"Contatando operadora do cartão para transação de R$ {valor:.2f}"</span>
+
+<span class="text-slate-500"># Função de checkout do seu e-commerce não se importa com a forma de pagamento</span>
+<span class="text-pink-400">def</span> <span class="text-blue-400">finalizar_venda</span>(forma_pagamento, total):
+    <span class="text-pink-400">print</span>(forma_pagamento.<span class="text-blue-400">processar</span>(total))
+
+finalizar_venda(<span class="text-yellow-300">PagamentoPix</span>(), <span class="text-amber-500">150.00</span>)
+finalizar_venda(<span class="text-yellow-300">PagamentoCartao</span>(), <span class="text-amber-500">450.50</span>)</pre>
+                </div>
+
+                <div class="terminal-shadow bg-black border border-emerald-500/30 rounded-lg p-4 font-mono text-sm">
+                    <div class="text-slate-500 text-xs mb-1">$ python checkout.py</div>
+                    <div class="text-emerald-400">Gerando QR Code para pagamento de R$ 150.00</div>
+                    <div class="text-emerald-400">Contatando operadora do cartão para transação de R$ 450.50</div>
+                </div>
+            </section>
+
+            <section id="fase-expert" class="space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <span class="text-xs font-mono text-amber-400 font-bold uppercase tracking-wider">Nível 04 — Expert</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Encapsulamento e Getters/Setters com Getters reais (`@property`)</h2>
+                </div>
+                <p class="text-slate-400">
+                    <strong class="text-white">Quando usar:</strong> Para evitar fraudes de estado em variáveis sensíveis. Se você deixar o saldo de uma carteira ou o preço de um item expostos diretamente, qualquer parte externa do código pode sobrescrever o dado sem nenhuma validação prévia.
+                </p>
+
+                <div class="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+                    <div class="bg-slate-800/40 px-4 py-2 text-xs font-mono text-slate-400">carteira.py</div>
+                    <pre class="p-6 text-xs sm:text-sm code-font leading-relaxed overflow-x-auto text-amber-100">
+<span class="text-pink-400">class</span> <span class="text-yellow-300">CarteiraDigital</span>:
+    <span class="text-pink-400">def</span> <span class="text-blue-400">__init__</span>(<span class="text-orange-400">self</span>):
+        <span class="text-orange-400">self</span>.<span class="text-red-400">__saldo</span> = <span class="text-amber-500">0.0</span>  <span class="text-slate-500"># Atributo Privado (Dois underscores)</span>
+
+    <span class="text-pink-400">@property</span>  <span class="text-slate-500"># Transforma a função em um Atributo de leitura limpo</span>
+    <span class="text-pink-400">def</span> <span class="text-blue-400">saldo</span>(<span class="text-orange-400">self</span>):
+        <span class="text-pink-400">return</span> <span class="text-orange-400">self</span>.<span class="text-red-400">__saldo</span>
+
+    <span class="text-pink-400">@saldo</span>.setter  <span class="text-slate-500"># Controla e valida qualquer tentativa de alteração</span>
+    <span class="text-pink-400">def</span> <span class="text-blue-400">saldo</span>(<span class="text-orange-400">self</span>, novo_valor):
+        <span class="text-pink-400">if</span> novo_valor &lt; <span class="text-amber-500">0</span>:
+            <span class="text-pink-400">raise</span> <span class="text-yellow-300">ValueError</span>(<span class="text-emerald-400">"Saldo não pode ser negativo!"</span>)
+        <span class="text-orange-400">self</span>.<span class="text-red-400">__saldo</span> = novo_valor
+
+minha_carteira = <span class="text-yellow-300">CarteiraDigital</span>()
+minha_carteira.saldo = <span class="text-amber-500">250.00</span>  <span class="text-slate-500"># Altera de forma segura</span>
+<span class="text-pink-400">print</span>(f<span class="text-emerald-400">"Saldo Atual: R$ {minha_carteira.saldo}"</span>)
+
+minha_carteira.saldo = -<span class="text-amber-500">50</span>  <span class="text-slate-500"># Dispara exceção de erro</span></pre>
+                </div>
+
+                <div class="terminal-shadow bg-black border border-red-500/30 rounded-lg p-4 font-mono text-sm space-y-1">
+                    <div class="text-slate-500 text-xs mb-1">$ python carteira.py</div>
+                    <div class="text-emerald-400">Saldo Atual: R$ 250.00</div>
+                    <div class="text-red-400 font-semibold">ValueError: Saldo não pode ser negativo!</div>
+                </div>
+            </section>
+
+            <section class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-8 space-y-6">
+                <h3 class="text-2xl font-bold text-white tracking-tight">O Grande Segredo da Produção: Composição</h3>
+                <p class="text-slate-300 text-sm leading-relaxed">
+                    Muitos professores falham em explicar que, no mercado real, nós evitamos abusar de Herança profunda (uma classe herdando de outra que herda de outra). Em vez disso, usamos a **Composição** (injetar objetos dentro de outros objetos).
+                </p>
+                <div class="bg-black/60 rounded-xl p-5 border border-white/5 font-mono text-xs sm:text-sm text-indigo-300 space-y-2">
+                    <div><span class="text-pink-400">class</span> <span class="text-yellow-300">BancoDeDados</span>: <span class="text-slate-600"># Objeto A</span></div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-400">def</span> <span class="text-blue-400">executar</span>(self, query): <span class="text-pink-400">return</span> <span class="text-emerald-400">"Resultados"</span></div>
+                    <br>
+                    <div><span class="text-pink-400">class</span> <span class="text-yellow-300">RankingService</span>: <span class="text-slate-600"># Objeto B</span></div>
+                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-pink-400">def</span> <span class="text-blue-400">__init__</span>(self, banco_dados):</div>
+                    <div class="text-emerald-400">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.db = banco_dados <span class="text-slate-600"># COMPOSIÇÃO: B depende de A</span></div>
+                </div>
+                <p class="text-xs text-slate-500">
+                    Isso torna o código desacoplado e infinitamente mais fácil de aplicar testes automatizados.
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
